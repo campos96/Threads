@@ -1,38 +1,114 @@
-.App {
-  text-align: center;
+:root {
+    --main-bg-color: #008080;
+    --main-bg-color-light: #94d3d3;
+    --main-bg-color-lighter: #ddecec;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+    background-color: #f3f4f6 !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.container-fluid {
+    max-width: calc(1920px * 1);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.navbar {
+    padding: 0 0 !important;
 }
 
-.App-link {
-  color: #61dafb;
+.navbar .container-fluid {
+    padding: 1rem 1rem !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.navbar .navbar-nav .nav-item {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    font-weight: bold;
+}
+
+.navbar .navbar-nav .nav-item a {
+    color: #777 !important;
+}
+
+.navbar .navbar-nav .nav-item a:hover {
+    color: #000 !important;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.card {
+    box-shadow: 0 0 1rem 0 #d8dbe9 !important;
+    border-radius: 1rem !important;
+    border-color: white !important;
+}
+
+.card .card-body {
+    padding: 1.5rem !important;
+}
+
+.card .card-body .card-title {
+    font-weight: bold;
+}
+
+.btn {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+}
+
+.btn.btn-sm {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+}
+
+.btn.has-icon svg {
+    margin-right: 0.25rem;
+}
+
+.sidebar .card-body {
+    padding: 0rem !important;
+}
+
+.sidebar .card-title {
+    padding: 1.5rem 1.5rem 0 1.5rem;
+}
+
+.sidebar .list-group {
+    margin-bottom: 1rem;
+    border-radius: 0;
+}
+
+.sidebar .list-group .list-group-item {
+    border: none !important;
+    padding: 0.75rem 1.5rem 0.75rem 2.5rem !important;
+    font-weight: bold;
+    color: #777;
+}
+
+.sidebar .list-group .list-group-item svg {
+    margin-top: 5px !important;
+    width: 20px;
+    ;
+}
+
+.sidebar .list-group .list-group-item:hover {
+    color: #000;
+    border-left: 3px solid var(--main-bg-color) !important;
+}
+
+.table thead {
+    background-color: var(--main-bg-color-lighter);
+}
+
+form .btn .spinner-border {
+    margin-right: 0.5rem;
+}
+
+.form-floating .form-label::after {
+    opacity: 0 !important;
+}
+
+.form-switch .form-check-input {
+    margin-top: 0.325rem !important;
 }
