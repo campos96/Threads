@@ -22,8 +22,8 @@ namespace Threads.Api.Controllers
         }
 
         // GET: api/Profiles/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Profile>> GetProfile(Guid id)
+        [HttpGet("{accountId}")]
+        public async Task<ActionResult<Profile>> GetProfile(Guid accountId)
         {
             if (_context.Profiles == null)
             {
@@ -31,7 +31,7 @@ namespace Threads.Api.Controllers
             }
             var profile = await _context.Profiles
                 .Include(p => p.Account)
-                .Where(p => p.AccountId == id)
+                .Where(p => p.AccountId == accountId)
                 .FirstOrDefaultAsync();
 
             if (profile == null)
@@ -43,10 +43,10 @@ namespace Threads.Api.Controllers
         }
 
         // PUT: api/Profiles/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutProfile(Guid id, Profile profile)
+        [HttpPut("{accountId}")]
+        public async Task<IActionResult> PutProfile(Guid accountId, Profile profile)
         {
-            if (id != profile.AccountId)
+            if (accountId != profile.AccountId)
             {
                 return ApiResult.BadRequest();
             }
@@ -60,7 +60,7 @@ namespace Threads.Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProfileExists(id))
+                if (!ProfileExists(accountId))
                 {
                     return ApiResult.NotFound();
                 }
