@@ -39,9 +39,9 @@ body {
 }
 
 .card {
-    box-shadow: 0 0 1rem 0 #d8dbe9 !important;
     border-radius: 1rem !important;
-    border-color: white !important;
+    box-shadow: 0 0 1rem 0 #d8dbe9 !important;
+    border-color: #e2e4ee !important;
 }
 
 .card .card-body {
@@ -111,4 +111,14 @@ form .btn .spinner-border {
 
 .form-switch .form-check-input {
     margin-top: 0.325rem !important;
+}
+
+[data-bs-theme=dark] body {
+    background-color: #18191a !important;
+}
+
+[data-bs-theme=dark] .card {
+    background-color: #242526 !important;
+    box-shadow: 0 0 1rem 0 #0b0b0c !important;
+    border-color: #2f3033 !important;
 }
