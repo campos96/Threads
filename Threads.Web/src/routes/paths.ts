@@ -3,7 +3,9 @@ const enum PATHS {
   LOGIN = "/login",
   FORGOT_PASSWORD = "/forgot-password",
   SIGNUP = "/signup",
-  HOME = "/home"
+  HOME = "/home",
+  PROFILE = "/profile",
+  LOGOUT = "/logout"
 }
 
 export default PATHS;

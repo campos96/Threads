@@ -9,7 +9,7 @@ body {
 }
 
 .container-fluid {
-    max-width: calc(1920px * 1);
+    max-width: calc(1920px * 0.8);
 }
 
 .navbar {
@@ -93,6 +93,12 @@ body {
 }
 
 .sidebar .list-group .list-group-item:hover {
+    color: #000;
+    border-left: 3px solid var(--main-bg-color) !important;
+}
+
+.sidebar .list-group .list-group-item.active {
+    background: #f8f9fa;
     color: #000;
     border-left: 3px solid var(--main-bg-color) !important;
 }
