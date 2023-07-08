@@ -28,12 +28,19 @@ namespace Threads.Api.Controllers
             }
 
             var threads = await _context.Threads
-                .Include(t=> t.Attachments)
-                .Include(t=> t.RepostedThread)
-                .Include(t=> t.RepliedThread)
-                .Include(t=> t.QuotedThread)
                 .Include(t => t.Account)
+                .Include(t => t.Attachments)
+                .Include(t => t.RepostedThread)
+                .Include(t => t.RepliedThread)
+                .Include(t => t.QuotedThread)
                 .ToListAsync();
+
+            foreach (var thread in threads)
+            {
+                thread.Replies = await _context.Threads
+                    .Where(t => t.RepliedThreadId == t.Id)
+                    .CountAsync();
+            }
 
             return ApiResult.Ok(payload: threads);
         }

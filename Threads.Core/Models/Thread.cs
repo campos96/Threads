@@ -51,5 +51,11 @@ namespace Threads.Core.Models
         public Thread? QuotedThread { get; set; }
 
         public virtual ICollection<ThreadAttachment>? Attachments { get; set; }
+
+        [NotMapped]
+        public int Replies { get; set; }
+
+        [NotMapped]
+        public int Likes { get; set; }
     }
 }
