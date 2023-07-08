@@ -4,3 +4,7 @@ export enum ACCOUNT {
   LOGIN = "/account/login",
   SIGNUP = "/account/signup",
 }
+
+export enum THREADS {
+  LIST = "/threads/",
+}
