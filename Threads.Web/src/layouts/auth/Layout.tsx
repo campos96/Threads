@@ -1,12 +1,17 @@
 import { Col, Container, ListGroup, Row } from "react-bootstrap";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import PATHS from "../../routes/paths";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { userIdentity } from "../../services/identity.service";
 
 const Layout = () => {
+  if (!userIdentity()) {
+    return <Navigate to={PATHS.LOGIN} />;
+  }
+
   return (
     <>
       <header>
@@ -15,7 +20,7 @@ const Layout = () => {
       <main>
         <Container fluid className=" mt-5">
           <Row>
-            <Col md={2} className="sidebar">
+            <Col md={3} className="sidebar">
               <Sidebar />
             </Col>
             <Col>

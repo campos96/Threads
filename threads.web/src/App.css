@@ -9,7 +9,7 @@ body {
 }
 
 .container-fluid {
-    max-width: calc(1920px * 0.8);
+    max-width: calc(1920px * 0.7);
 }
 
 .navbar {
@@ -127,4 +127,26 @@ form .btn .spinner-border {
     background-color: #242526 !important;
     box-shadow: 0 0 1rem 0 #0b0b0c !important;
     border-color: #2f3033 !important;
+}
+
+.btn-icon {
+    padding: 0px 5px !important;
+}
+
+.btn-icon:active {
+    background-color: #e8f1f1 !important;
+    color: #008080 !important;
+    border-color: #008080 !important;
+} 
+
+.verified-icon {
+    color: #1d9bf0;
+    margin-top: 3px;
+}
+
+.thread-line {
+    background-color: #eee;
+    margin: auto;
+    width: 2px;
+    height: 100%;
 }
