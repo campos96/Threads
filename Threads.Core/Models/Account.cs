@@ -19,6 +19,9 @@ namespace Threads.Core.Models
         [Required]
         public string Name { get; set; }
 
+        [Required]
+        public string LastName { get; set; }
+
         public string? Phone { get; set; }
 
         public string? Gender { get; set; }
