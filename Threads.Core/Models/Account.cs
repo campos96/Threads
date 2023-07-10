@@ -29,5 +29,7 @@ namespace Threads.Core.Models
         public DateTime? Birthday { get; set; }
 
         public DateTime? Created { get; set; }
+
+        public string FullName => $"{Name} {LastName}";
     }
 }

@@ -48,6 +48,11 @@ namespace Threads.Api.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> Login(Login login)
         {
+            if (!ModelState.IsValid)
+            {
+                return ApiResult.BadRequest();
+            }
+
             var security = await _context.Security
                 .Include(s => s.Account)
                 .Where(s => s.Account!.Username == login.Username && s.Password == login.Password)
@@ -77,7 +82,9 @@ namespace Threads.Api.Controllers
                 Expires = DateTime.UtcNow.AddHours(1),
                 Issuer = issuer,
                 Audience = audience,
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha512Signature)
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -89,11 +96,77 @@ namespace Threads.Api.Controllers
             {
                 AccessToken = stringToken,
                 ExpiresIn = (int)(tokenDescriptor.Expires.Value - DateTime.UtcNow).TotalSeconds,
-                UserFullName = security.Account!.Name,
                 AccountId = security.AccountId,
             };
 
             return ApiResult.Ok(payload: authenticationResult);
+        }
+
+        // POST: api/account/signup
+        [AllowAnonymous]
+        [HttpPost("signup")]
+        public async Task<ActionResult> Signup(Signup signup)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ApiResult.BadRequest();
+            }
+
+            var account = await _context.Accounts
+                .Where(a => a.Username == signup.Username || a.Email == signup.Email)
+                .FirstOrDefaultAsync();
+
+            if (account != null)
+            {
+                if (account.Username == signup.Username)
+                {
+                    return ApiResult.BadRequest(errors: new
+                    {
+                        Username = new[] { "Username already exist." }
+                    });
+                }
+                else if (account.Email == signup.Email)
+                {
+                    return ApiResult.BadRequest(errors: new
+                    {
+                        Email = new[] { "Email already exist." }
+                    });
+                }
+            }
+
+            using (var trx = _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    account = new Account
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = signup.Name,
+                        LastName = signup.LastName,
+                        Username = signup.Username,
+                        Email = signup.Email,
+                        Created = DateTime.Now
+                    };
+                    _context.Accounts.Add(account);
+                    await _context.SaveChangesAsync();
+
+                    var security = new Security { AccountId = account.Id, Password = signup.Password, };
+                    _context.Security.Add(security);
+                    await _context.SaveChangesAsync();
+
+                    var profile = new Profile { AccountId = account.Id };
+                    _context.Profiles.Add(profile);
+                    await _context.SaveChangesAsync();
+                    await trx.Result.CommitAsync();
+                }
+                catch
+                {
+                    await trx.Result.RollbackAsync();
+                    //log error
+                }
+            }
+
+            return ApiResult.Ok();
         }
     }
 }
