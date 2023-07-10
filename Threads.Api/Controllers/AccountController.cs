@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Threads.Api.Data;
 using Threads.Api.Models;
+using Threads.Core.Models;
 
 namespace Threads.Api.Controllers
 {
@@ -26,16 +25,29 @@ namespace Threads.Api.Controllers
             _config = config;
         }
 
+        // GET api/account/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Account>> GetAccount(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return ApiResult.BadRequest();
+            }
+
+            var account = await _context.Accounts.FindAsync(id);
+            if (account == null)
+            {
+                return ApiResult.NotFound();
+            }
+
+            return ApiResult.Ok(payload: account);
+        }
+
         // POST: api/account/login
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult> Login(Login login)
         {
-            if (_context.Accounts == null)
-            {
-                return NotFound();
-            }
-
             var security = await _context.Security
                 .Include(s => s.Account)
                 .Where(s => s.Account!.Username == login.Username && s.Password == login.Password)

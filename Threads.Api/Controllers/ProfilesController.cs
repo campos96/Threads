@@ -21,14 +21,15 @@ namespace Threads.Api.Controllers
             _context = context;
         }
 
-        // GET: api/Profiles/5
+        // GET: api/Profiles/accountId
         [HttpGet("{accountId}")]
-        public async Task<ActionResult<Profile>> GetProfile(Guid accountId)
+        public async Task<ActionResult<Profile>> GetProfileById(Guid accountId)
         {
             if (_context.Profiles == null)
             {
                 return ApiResult.NotFound();
             }
+
             var profile = await _context.Profiles
                 .Include(p => p.Account)
                 .Where(p => p.AccountId == accountId)
@@ -42,7 +43,29 @@ namespace Threads.Api.Controllers
             return ApiResult.Ok(payload: profile);
         }
 
-        // PUT: api/Profiles/5
+        // GET: api/Profiles/{username}
+        [HttpGet("username/{username}")]
+        public async Task<ActionResult<Profile>> GetProfileByUsername(string username)
+        {
+            if (_context.Profiles == null)
+            {
+                return ApiResult.NotFound();
+            }
+
+            var profile = await _context.Profiles
+                .Include(p => p.Account)
+                .Where(p => p.Account!.Username == username)
+                .FirstOrDefaultAsync();
+
+            if (profile == null)
+            {
+                return ApiResult.NotFound();
+            }
+
+            return ApiResult.Ok(payload: profile);
+        }
+
+        // PUT: api/Profiles/accountId
         [HttpPut("{accountId}")]
         public async Task<IActionResult> PutProfile(Guid accountId, Profile profile)
         {
