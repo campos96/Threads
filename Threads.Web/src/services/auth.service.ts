@@ -5,6 +5,7 @@ import Login from "../types/Login";
 import headers from "./headers";
 import Identity from "../types/Identity";
 import Account from "../types/Account";
+import Signup from "../types/Signup";
 
 export const login = async (values: Login) => {
   return await request(API_URL + ACCOUNT.LOGIN, {
@@ -14,10 +15,10 @@ export const login = async (values: Login) => {
     },
     body: JSON.stringify(values),
   }).then(async (response) => {
-    var authResult = response.payload as AuthResult;
+    const authResult = response.payload as AuthResult;
     if (authResult) {
       localStorage.setItem("AccessToken", authResult.accessToken);
-      var expirationDate = new Date();
+      const expirationDate = new Date();
       expirationDate.setSeconds(
         expirationDate.getSeconds() + authResult.expiresIn
       );
@@ -26,13 +27,13 @@ export const login = async (values: Login) => {
         expirationDate.getTime().toString()
       );
 
-      var account = await getAccount(authResult.accountId).then(
+      const account = await getAccount(authResult.accountId).then(
         async (response) => (await response.payload) as Account
       );
 
-      var identity = {
+      const identity = {
         id: account.id,
-        name: account.name,
+        name: account.fullName,
         username: account.username,
       } as Identity;
 
@@ -40,6 +41,14 @@ export const login = async (values: Login) => {
     }
     return response;
   });
+};
+
+export const signup = (values: Signup) => {
+  return request(API_URL + ACCOUNT.SIGNUP, {
+    method: "POST",
+    headers: headers(),
+    body: JSON.stringify(values),
+  }).then((response) => response);
 };
 
 export const getAccount = (id: string) => {

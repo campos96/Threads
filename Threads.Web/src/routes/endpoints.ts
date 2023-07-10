@@ -12,4 +12,5 @@ export enum THREADS {
 
 export enum PROFILE {
   GET = "/profiles/username/",
+  THREADS = "/profiles/threads/",
 }

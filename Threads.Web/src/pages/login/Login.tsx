@@ -19,7 +19,7 @@ const Login = () => {
   return (
     <Row className="justify-content-center">
       <Col sm={8} md={7} lg={6} xl={5} xxl={4}>
-        <Card>
+        <Card className="shadow-sm">
           <Card.Body>
             <Card.Title className="text-center mt-4 mb-5">Log in</Card.Title>
             <LoginForm onAuthSucceed={onSucceed} />
@@ -28,7 +28,7 @@ const Login = () => {
         <Row className="text-center mt-3">
           <Col>
             <hr />
-            <p>or</p>
+            <p>Don't have an account?</p>
             <Button href={PATHS.SIGNUP} variant="outline-primary">
               Sign up
             </Button>
