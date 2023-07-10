@@ -1,9 +1,10 @@
 import { API_URL, THREADS } from "../routes/endpoints";
 import headers from "./headers";
+import request from "./request";
 
 export const getThreads = () => {
-  return fetch(API_URL + THREADS.LIST, {
+  return request(API_URL + THREADS.LIST, {
     method: "GET",
     headers: headers(),
-  }).then((response) => response.json());
+  }).then((response) => response);
 };

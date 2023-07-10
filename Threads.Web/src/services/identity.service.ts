@@ -3,10 +3,9 @@ import Identity from "../types/Identity";
 export const userIdentity = (): Identity | undefined => {
   const accessToken = localStorage.getItem("AccessToken");
   const accessTokenExpiration = localStorage.getItem("AccessTokenExpiration");
-  const fullName = localStorage.getItem("FullName");
-  const accountId = localStorage.getItem("AccountId");
+  const accountString = localStorage.getItem("Identity");
 
-  if (!accessToken || !accessTokenExpiration || !fullName || !accountId) {
+  if (!accessToken || !accessTokenExpiration || !accountString) {
     return;
   }
 
@@ -14,8 +13,5 @@ export const userIdentity = (): Identity | undefined => {
     return;
   }
 
-  return {
-    id: accountId,
-    name: fullName,
-  } as Identity;
+  return JSON.parse(accountString) as Identity;
 };

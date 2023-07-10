@@ -1,7 +1,7 @@
 type Attachment = {
-  Id: string;
-  ThreadId: string;
-  Type: number;
+  id: string;
+  threadId: string;
+  type: number;
 };
 
 export default Attachment;
