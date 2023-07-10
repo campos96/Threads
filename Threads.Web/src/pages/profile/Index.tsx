@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getProfile } from "../../services/profile.service";
+import { getProfile, getThreads } from "../../services/profile.service";
 import Profile from "../../types/Profile";
 import {
   Card,
@@ -14,7 +14,6 @@ import {
 import { useParams } from "react-router-dom";
 import Threads from "../../components/threads/Threads";
 import Thread from "../../types/Thread";
-import { getThreads } from "../../services/threads.service";
 import PATHS from "../../routes/paths";
 
 const Index = () => {
@@ -89,9 +88,6 @@ const ProfileCard = ({ profile }: { profile: Profile }) => {
               </div>
             </Col>
             <Col xs={3} className="d-flex align-items-center ps-0">
-              xs={3}
-              className="d-flex align-items-center ps-0"
-            >
               <Image
                 src="https://i.pravatar.cc/300"
                 roundedCircle
@@ -100,11 +96,13 @@ const ProfileCard = ({ profile }: { profile: Profile }) => {
             </Col>
           </Row>
           {profile.biography && (
-          <Row>
-            <Col>
-              <div style={{ whiteSpace: "pre-wrap" }}>{profile.biography}</div>
-            </Col>
-          </Row>
+            <Row>
+              <Col>
+                <div style={{ whiteSpace: "pre-wrap" }}>
+                  {profile.biography}
+                </div>
+              </Col>
+            </Row>
           )}
           <Row className="mt-3">
             <Col>
@@ -115,12 +113,12 @@ const ProfileCard = ({ profile }: { profile: Profile }) => {
           </Row>
         </Card.Body>
       </Card>
-      <ProfileSections />
+      <ProfileSections username={profile.account!.username} />
     </>
   );
 };
 
-const ProfileSections = () => {
+const ProfileSections = ({ username }: { username: string }) => {
   const [key, setKey] = useState("threads");
 
   return (
@@ -134,7 +132,7 @@ const ProfileSections = () => {
           justify
         >
           <Tab eventKey="threads" title="Threads">
-            {key && <ProfileThreads />}
+            {key && <ProfileThreads username={username} />}
           </Tab>
           {/* <Tab eventKey="replies" title="Replies">
                     replies
@@ -145,14 +143,14 @@ const ProfileSections = () => {
   );
 };
 
-const ProfileThreads = () => {
+const ProfileThreads = ({ username }: { username: string }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [threads, setThreads] = useState<Array<Thread>>();
 
   useEffect(() => {
     setLoading(true);
-    getThreads()
+    getThreads(username)
       .then(
         (response) => {
           if (response.status === 200) {
@@ -169,7 +167,7 @@ const ProfileThreads = () => {
       .then(() => {
         setLoading(false);
       });
-  }, []);
+  }, [username]);
 
   return (
     <>

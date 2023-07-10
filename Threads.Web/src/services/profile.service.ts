@@ -8,3 +8,11 @@ export const getProfile = (username: string) => {
     headers: headers(),
   }).then((response) => response);
 };
+
+export const getThreads = (username: string) => {
+  return request(API_URL + PROFILE.THREADS + username, {
+    method: "GET",
+    headers: headers(),
+  }).then((response) => response);
+};
+
