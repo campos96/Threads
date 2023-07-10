@@ -5,7 +5,7 @@ export const FloatingText = (props: FloatingTextProps) => {
   return (
     <Form.Floating className="mb-3">
       <Form.Control
-        type="text"
+        type={props.type ?? "text"}
         name={props.name}
         placeholder={props.label}
         disabled={props.disabled}
