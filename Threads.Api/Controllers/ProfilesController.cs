@@ -91,6 +91,34 @@ namespace Threads.Api.Controllers
             }
         }
 
+        // PUT: api/Profiles/username
+        [HttpGet("threads/{username}")]
+        public async Task<ActionResult<IEnumerable<Core.Models.Thread>>> GetThreads(string username)
+        {
+            if (_context.Threads == null)
+            {
+                return ApiResult.NotFound();
+            }
+
+            var threads = await _context.Threads
+                .Include(t => t.Account)
+                .Include(t => t.Attachments)
+                .Include(t => t.RepostedThread)
+                .Include(t => t.RepliedThread)
+                .Include(t => t.QuotedThread)
+                .Where(t => t.Account!.Username == username)
+                .ToListAsync();
+
+            foreach (var thread in threads)
+            {
+                thread.Replies = await _context.Threads
+                    .Where(t => t.RepliedThreadId == t.Id)
+                    .CountAsync();
+            }
+
+            return ApiResult.Ok(payload: threads);
+        }
+
         private bool ProfileExists(Guid id)
         {
             return (_context.Profiles?.Any(e => e.AccountId == id)).GetValueOrDefault();
