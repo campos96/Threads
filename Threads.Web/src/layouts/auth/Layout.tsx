@@ -18,15 +18,15 @@ const Layout = () => {
         <Navbar />
       </header>
       <main>
-        <Container fluid className=" mt-5">
+        <Container className="p-0 p-md-3 mt-0 mt-sm-3">
           <Row>
-            <Col md={3} className="sidebar">
+            <Col lg={3} className="sidebar d-none d-lg-block">
               <Sidebar />
             </Col>
             <Col>
               <Outlet />
             </Col>
-            <Col md={3}>
+            <Col xl={3}>
               <Footer />
             </Col>
           </Row>
@@ -38,16 +38,19 @@ const Layout = () => {
 
 const Sidebar = () => {
   return (
-    <ListGroup className="list-group">
-      <ListGroup.Item action href={PATHS.HOME}>
+    <div className="sidebar-list">
+      <a className="sidebar-link" href={PATHS.HOME}>
+        <FontAwesomeIcon icon={icon({ name: "house" })} />
         Home
-        <FontAwesomeIcon icon={icon({ name: "house" })} className="float-end" />
-      </ListGroup.Item>
-      <ListGroup.Item action href={PATHS.PROFILE}>
+      </a>
+      <a
+        className="sidebar-link"
+        href={PATHS.PROFILE + userIdentity()?.username}
+      >
+        <FontAwesomeIcon icon={icon({ name: "user" })} />
         Profile
-        <FontAwesomeIcon icon={icon({ name: "user" })} className="float-end" />
-      </ListGroup.Item>
-    </ListGroup>
+      </a>
+    </div>
   );
 };
 

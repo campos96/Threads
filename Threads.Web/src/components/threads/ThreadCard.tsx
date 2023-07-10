@@ -2,15 +2,15 @@ import { Button, Card, Col, Row, Image } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import Thread from "../../types/Thread";
+import PATHS from "../../routes/paths";
 
 const ThreadCard = ({ props }: { props: Thread }) => {
-  console.log(props);
   return (
     props && (
-      <Card className="mb-3">
+      <Card className="shadow-sm mb-1 mb-sm-2 mb-md-3">
         <Card.Body>
           <Row>
-            <Col sm="auto" className="overflow-hidden">
+            <Col xs="auto" className="overflow-hidden">
               <Image src="https://i.pravatar.cc/300" roundedCircle width={50} />
               {props.replies > 0 && <div className="thread-line"></div>}
             </Col>
@@ -18,7 +18,9 @@ const ThreadCard = ({ props }: { props: Thread }) => {
               <Row>
                 <Col>
                   <div className="d-flex float-start gap-1 align-items-center">
-                    <strong>{props.account?.username}</strong>
+                    <a href={PATHS.PROFILE + props.account?.username} className="link-text">
+                      <strong>{props.account?.username}</strong>
+                    </a>
                     {/* <FontAwesomeIcon
                       icon={icon({ name: "circle-check" })}
                       className="verified-icon"
@@ -50,7 +52,7 @@ const ThreadCard = ({ props }: { props: Thread }) => {
               )}
               <Row>
                 <Col>
-                  <div className="d-flex gap-3">
+                  <div className="d-flex gap-2">
                     <Button variant="text" className="btn-icon">
                       <FontAwesomeIcon
                         icon={icon({ style: "regular", name: "heart" })}
@@ -61,14 +63,14 @@ const ThreadCard = ({ props }: { props: Thread }) => {
                         icon={icon({ style: "regular", name: "comment" })}
                       />
                     </Button>
-                    <Button variant="text" className="btn-icon">
+                    {/* <Button variant="text" className="btn-icon">
                       <FontAwesomeIcon icon={icon({ name: "retweet" })} />
                     </Button>
                     <Button variant="text" className="btn-icon">
                       <FontAwesomeIcon
                         icon={icon({ style: "regular", name: "paper-plane" })}
                       />
-                    </Button>
+                    </Button> */}
                   </div>
                 </Col>
               </Row>

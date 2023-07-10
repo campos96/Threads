@@ -1,11 +1,10 @@
 import { Button, Card, Col, Row, Image } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
-import Thread from "../../types/Thread";
 
 const ThreadCardDesign = () => {
   return (
-    <Card className="mb-3">
+    <Card className="shadow-sm mb-1 mb-sm-2 mb-md-3">
       <Card.Body>
         <Row>
           <Col sm="auto" className="overflow-hidden">
