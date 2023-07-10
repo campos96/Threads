@@ -58,11 +58,11 @@ const ThreadCard = ({ props }: { props: Thread }) => {
                         icon={icon({ style: "regular", name: "heart" })}
                       />
                     </Button>
-                    <Button variant="text" className="btn-icon">
+                    {/* <Button variant="text" className="btn-icon">
                       <FontAwesomeIcon
                         icon={icon({ style: "regular", name: "comment" })}
                       />
-                    </Button>
+                    </Button> */}
                     {/* <Button variant="text" className="btn-icon">
                       <FontAwesomeIcon icon={icon({ name: "retweet" })} />
                     </Button>

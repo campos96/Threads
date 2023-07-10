@@ -74,7 +74,7 @@ const ProfileCard = ({ profile }: { profile: Profile }) => {
             <Col className="d-flex gap-1 align-items-center">
               <div>
                 <h3 className="mb-0">
-                  <strong>{profile.account?.name}</strong>
+                  <strong>{profile.account?.fullName}</strong>
                 </h3>
                 <h6 className="text-secondary">
                   <strong>{profile.account?.username}</strong>
@@ -88,7 +88,7 @@ const ProfileCard = ({ profile }: { profile: Profile }) => {
                 </Button>
               </div>
             </Col>
-            <Col
+            <Col xs={3} className="d-flex align-items-center ps-0">
               xs={3}
               className="d-flex align-items-center ps-0"
             >
@@ -99,11 +99,13 @@ const ProfileCard = ({ profile }: { profile: Profile }) => {
               />
             </Col>
           </Row>
+          {profile.biography && (
           <Row>
             <Col>
               <div style={{ whiteSpace: "pre-wrap" }}>{profile.biography}</div>
             </Col>
           </Row>
+          )}
           <Row className="mt-3">
             <Col>
               <a href="/eeeeee" className="link-dark">
