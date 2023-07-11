@@ -22,5 +22,7 @@ namespace Threads.Api.Data
 
         public DbSet<Threads.Core.Models.ThreadAttachment> ThreadAttachments { get; set; }
 
+        public DbSet<Threads.Core.Models.Configuration> Configuration { get; set; }
+
     }
 }
