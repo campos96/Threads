@@ -3,11 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Threads.Core.Models
 {
-    public enum AttachmentType
-    {
-        Image = 0, Video = 1
-    }
-
     public class ThreadAttachment
     {
         [Key]
@@ -17,10 +12,13 @@ namespace Threads.Core.Models
         public Guid ThreadId { get; set; }
 
         [Required]
-        public AttachmentType Type { get; set; }
+        public string ContentType { get; set; }
 
         [Required]
-        public byte[] Data { get; set; }
+        public byte[] Bytes { get; set; }
+
+        [Required]
+        public string FileName { get; set; }
 
         [ForeignKey(nameof(ThreadId))]
         public Thread? Thread { get; set; }
