@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Threads.Api.Data;
+using Threads.Api.Models;
 using Threads.Core.Models;
 
 namespace Threads.Api.Controllers
@@ -63,6 +64,94 @@ namespace Threads.Api.Controllers
             }
 
             return ApiResult.Ok(payload: profile);
+        }
+
+        // GET: api/profiles/account/{id}
+        [HttpGet("account/{id}")]
+        public async Task<ActionResult<AccountProfile>> GetAccountProfile(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return ApiResult.BadRequest();
+            }
+
+            var profile = await _context.Profiles
+                .Include(a => a.Account)
+                .Where(a => a.AccountId == id)
+                .FirstOrDefaultAsync();
+
+            if (profile == null)
+            {
+                return ApiResult.NotFound();
+            }
+
+            var accountProfile = new AccountProfile
+            {
+                AccountId = profile.AccountId,
+                Username = profile.Account.Username,
+                Name = profile.Account.Name,
+                LastName = profile.Account.LastName,
+                DisplayName = profile.DisplayName,
+                Email = profile.Account.Email,
+                IsPrivate = profile.IsPrivate,
+                Biography = profile.Biography,
+                Birthday = profile.Account.Birthday,
+                Gender = profile.Account.Gender,
+                Phone = profile.Account.Phone,
+                Link = profile.Link
+            };
+
+            return ApiResult.Ok(payload: accountProfile);
+        }
+
+        // PUT: api/profiles/account/{id}
+        [HttpPut("account/{id}")]
+        public async Task<ActionResult<AccountProfile>> PutAccountProfile(Guid id, AccountProfile accountProfile)
+        {
+            if (id != accountProfile.AccountId)
+            {
+                return ApiResult.BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return ApiResult.BadRequest();
+            }
+
+            var profile = await _context.Profiles
+                .Include(p => p.Account)
+                .Where(p => p.AccountId == id)
+                .FirstOrDefaultAsync();
+
+            if (profile == null)
+            {
+                return ApiResult.BadRequest();
+            }
+
+            using (var trx = _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    profile.Account.Name = accountProfile.Name;
+                    profile.Account.LastName = accountProfile.LastName;
+                    profile.Account.Birthday = accountProfile.Birthday;
+                    profile.Account.Gender = accountProfile.Gender;
+                    profile.Account.Phone = accountProfile.Phone;
+                    profile.IsPrivate = accountProfile.IsPrivate;
+                    profile.DisplayName = accountProfile.DisplayName;
+                    profile.Biography = accountProfile.Biography;
+                    profile.Link = accountProfile.Link;
+                    await _context.SaveChangesAsync();
+                    await trx.Result.CommitAsync();
+                }
+                catch
+                {
+                    await trx.Result.RollbackAsync();
+                    throw;
+                }
+            }
+
+            return ApiResult.Ok(payload: accountProfile);
         }
 
         // PUT: api/Profiles/accountId
