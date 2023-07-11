@@ -193,9 +193,6 @@ form .btn .spinner-border {
     border-radius: 100%;
     box-shadow: 0 0 0.5rem 0 #aaa !important;
     padding: 10px !important;
-}
-
-.btn-image-close svg {
     display: flex;
 }
 

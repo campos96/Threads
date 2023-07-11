@@ -5,8 +5,9 @@ const enum PATHS {
   SIGNUP = "/signup/",
   HOME = "/home/",
   PROFILE = "/profile/",
-  PROFILE_EDIT = "/profile/edit",
-  LOGOUT = "/logout/"
+  PROFILE_EDIT = "/profile/edit/",
+  LOGOUT = "/logout/",
+  NEW_THREAD = "/threads/new/"
 }
 
 export default PATHS;

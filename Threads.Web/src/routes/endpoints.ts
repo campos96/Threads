@@ -8,6 +8,7 @@ export enum ACCOUNT {
 
 export enum THREADS {
   LIST = "/threads/",
+  ADD = "/threads/",
 }
 
 export enum PROFILE {

@@ -1,4 +1,4 @@
-import { Col, Container, ListGroup, Row } from "react-bootstrap";
+import { Button, Col, Container, ListGroup, Row } from "react-bootstrap";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Navigate, Outlet } from "react-router-dom";
@@ -38,19 +38,23 @@ const Layout = () => {
 
 const Sidebar = () => {
   return (
-    <div className="sidebar-list">
-      <a className="sidebar-link" href={PATHS.HOME}>
-        <FontAwesomeIcon icon={icon({ name: "house" })} />
-        Home
-      </a>
-      <a
-        className="sidebar-link"
-        href={PATHS.PROFILE + userIdentity()?.username}
-      >
-        <FontAwesomeIcon icon={icon({ name: "user" })} />
-        Profile
-      </a>
-    </div>
+    <>
+      <div className="sidebar-list">
+        <a className="sidebar-link" href={PATHS.HOME}>
+          <FontAwesomeIcon icon={icon({ name: "house" })} />
+          Home
+        </a>
+        <a
+          className="sidebar-link"
+          href={PATHS.PROFILE + userIdentity()?.username}
+        >
+          <FontAwesomeIcon icon={icon({ name: "user" })} />
+          Profile
+        </a>
+      </div>
+
+      <a href={PATHS.NEW_THREAD} className="btn-action-teal mt-3 w-100">New Thread</a>
+    </>
   );
 };
 

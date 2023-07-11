@@ -8,6 +8,7 @@ import Logout from "../pages/logout/Logout";
 import Home from "../pages/home/Home";
 import ProfileIndex from "../pages/profile/Index";
 import EditProfile from "../pages/profile/Edit";
+import NewThread from "../pages/new-thread/NewThread";
 
 const Router = () => {
   return (
@@ -22,6 +23,7 @@ const Router = () => {
         <Route path="home" element={<Home />}></Route>
         <Route path="profile/:username" element={<ProfileIndex />} />
         <Route path="profile/edit" element={<EditProfile />} />
+        <Route path="threads/new" element={<NewThread />} />
       </Route>
     </Routes>
   );
