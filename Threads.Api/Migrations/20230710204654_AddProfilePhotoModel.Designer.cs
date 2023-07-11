@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Threads.Api.Data;
 
@@ -11,9 +12,11 @@ using Threads.Api.Data;
 namespace Threads.Api.Migrations
 {
     [DbContext(typeof(ThreadsContext))]
-    partial class ThreadsContextModelSnapshot : ModelSnapshot
+    [Migration("20230710204654_AddProfilePhotoModel")]
+    partial class AddProfilePhotoModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,20 +68,6 @@ namespace Threads.Api.Migrations
                         .IsUnique();
 
                     b.ToTable("Accounts");
-                });
-
-            modelBuilder.Entity("Threads.Core.Models.Configuration", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<byte[]>("DefaultProfilePhoto")
-                        .HasColumnType("varbinary(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Configuration");
                 });
 
             modelBuilder.Entity("Threads.Core.Models.Follower", b =>
