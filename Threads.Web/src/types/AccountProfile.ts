@@ -1,6 +1,7 @@
 type AccountProfile = {
   accountId: string;
   name: string;
+  lastName: string;
   isPrivate: boolean;
   username?: string;
   email?: string;

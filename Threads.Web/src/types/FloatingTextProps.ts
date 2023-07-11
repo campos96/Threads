@@ -2,7 +2,7 @@ import { ChangeEvent } from "react";
 
 type FloatingTextProps = {
     name: string;
-    label: string;
+    label?: string;
     value: string | undefined;
     errorMessage?: string | undefined;
     handleChange: (e: ChangeEvent<HTMLInputElement>) => void;

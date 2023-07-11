@@ -13,4 +13,9 @@ export enum THREADS {
 export enum PROFILE {
   GET = "/profiles/username/",
   THREADS = "/profiles/threads/",
+  ACCOUNT = "/profiles/account/",
+  PUT_ACCOUNT = "/profiles/account/",
+  SET_PHOTO = "/profiles/photo/",
+  GET_PHOTO = "/profiles/photo/",
+  DELETE_PHOTO = "/profiles/photo/",
 }

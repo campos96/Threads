@@ -1,24 +1,22 @@
 import { useEffect, useState } from "react";
-import { getProfile } from "../../services/profile.service";
-import Profile from "../../types/Profile";
+import { getThreads } from "../../services/profile.service";
+import Thread from "../../types/Thread";
 import { Spinner } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import Summary from "./Summary";
+import Threads from "../../components/threads/Threads";
 
-const Index = () => {
-  const { username } = useParams();
+const ProfileThreads = ({ username }: { username: string }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const [profile, setProfile] = useState<Profile>();
+  const [threads, setThreads] = useState<Array<Thread>>();
 
   useEffect(() => {
     setLoading(true);
-    getProfile(username!)
+    getThreads(username)
       .then(
         (response) => {
           if (response.status === 200) {
-            const profile = response.payload as Profile;
-            setProfile(profile);
+            const threadList = response.payload as Array<Thread>;
+            setThreads(threadList);
           } else {
             setError(true);
           }
@@ -36,7 +34,7 @@ const Index = () => {
     <>
       {loading && (
         <div className="p-md-3 text-center text-muted">
-          <h3>Loading Threads...</h3>
+          <h3>Loading Profile...</h3>
           <Spinner animation="border" className="mt-3" />
         </div>
       )}
@@ -47,10 +45,9 @@ const Index = () => {
           <p>Please try again later...</p>
         </div>
       )}
-
-      {profile && <Summary profile={profile} />}
+      {threads && <Threads items={threads} />}
     </>
   );
 };
 
-export default Index;
+export default ProfileThreads;

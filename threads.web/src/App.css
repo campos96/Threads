@@ -188,3 +188,52 @@ form .btn .spinner-border {
 .link-text:hover {
     color: #008080;
 }
+
+.btn-floating-circle {
+    border-radius: 100%;
+    box-shadow: 0 0 0.5rem 0 #aaa !important;
+    padding: 10px !important;
+}
+
+.btn-image-close svg {
+    display: flex;
+}
+
+.btn-image-close {
+    background-color: #000;
+    color: white;
+    border-radius: 100%;
+    box-shadow: 0 0 0.5rem 0 #aaa !important;
+    width: 30px !important;
+    height: 30px !important;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+}
+
+.btn-image-close:hover {
+    opacity: 1;
+}
+
+.btn-action-teal {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #008080;
+    border-color: #006d6d;
+    padding: 0.75rem;
+    border-radius: 1rem;
+}
+
+.btn-action-teal:hover {
+    background-color: #008080;
+    border-color: #006d6d;
+}
+
+.btn-action-teal:active {
+    background-color: #006d6d;
+    border-color: #006d6d;
+}

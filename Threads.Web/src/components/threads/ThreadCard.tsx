@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import Thread from "../../types/Thread";
 import PATHS from "../../routes/paths";
+import { API_URL, PROFILE } from "../../routes/endpoints";
 
 const ThreadCard = ({ props }: { props: Thread }) => {
   return (
@@ -11,7 +12,7 @@ const ThreadCard = ({ props }: { props: Thread }) => {
         <Card.Body>
           <Row>
             <Col xs="auto" className="overflow-hidden">
-              <Image src="https://i.pravatar.cc/300" roundedCircle width={50} />
+              <Image src={API_URL + PROFILE.GET_PHOTO + props.account!.username} roundedCircle width={50} />
               {props.replies > 0 && <div className="thread-line"></div>}
             </Col>
             <Col className="ps-0">
