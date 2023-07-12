@@ -28,19 +28,8 @@ namespace Threads.Api.Controllers
             }
 
             var threads = await _context.Threads
-                .Include(t => t.Account)
-                .Include(t => t.Attachments)
-                .Include(t => t.RepostedThread)
-                .Include(t => t.RepliedThread)
-                .Include(t => t.QuotedThread)
+                .OrderByDescending(t => t.Created)
                 .ToListAsync();
-
-            foreach (var thread in threads)
-            {
-                thread.Replies = await _context.Threads
-                    .Where(t => t.RepliedThreadId == t.Id)
-                    .CountAsync();
-            }
 
             return ApiResult.Ok(payload: threads);
         }
@@ -54,11 +43,11 @@ namespace Threads.Api.Controllers
                 return ApiResult.NotFound();
             }
             var thread = await _context.Threads
+                .Include(t => t.Account)
                 .Include(t => t.Attachments)
                 .Include(t => t.RepostedThread)
                 .Include(t => t.RepliedThread)
                 .Include(t => t.QuotedThread)
-                .Include(t => t.Account)
                 .Where(t => t.Id == id)
                 .FirstOrDefaultAsync();
 
@@ -66,6 +55,14 @@ namespace Threads.Api.Controllers
             {
                 return ApiResult.NotFound();
             }
+
+            thread.Replies = await _context.Threads
+                    .Where(t => t.RepliedThreadId == thread.Id)
+                    .CountAsync();
+
+            thread.Likes = await _context.ThreadLikes
+                    .Where(t => t.ThreadId == thread.Id)
+                    .CountAsync();
 
             return ApiResult.Ok(payload: thread);
         }
@@ -105,6 +102,7 @@ namespace Threads.Api.Controllers
                 return Problem("Entity set 'ThreadsContext.Threads'  is null.");
             }
 
+            thread.Created = DateTime.Now;
             _context.Threads.Add(thread);
             await _context.SaveChangesAsync();
             return ApiResult.Ok(payload: thread);
