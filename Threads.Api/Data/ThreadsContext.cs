@@ -25,6 +25,8 @@ namespace Threads.Api.Data
         public DbSet<Threads.Core.Models.ProfilePhoto> ProfilePhotos { get; set; }
 
         public DbSet<Threads.Core.Models.Configuration> Configuration { get; set; }
+       
+        public DbSet<Threads.Core.Models.ThreadLike> ThreadLikes { get; set; }
 
     }
 }
