@@ -6,9 +6,13 @@ export enum ACCOUNT {
   SIGNUP = "/account/signup/",
 }
 
+
 export enum THREADS {
   LIST = "/threads/",
   ADD = "/threads/",
+  LIKE = "/threadLikes/",
+  GET_LIKE = "/threadLikes/"
+}
 
 export enum ATTACHMENTS {
   ADD = "/threadAttachments/",
