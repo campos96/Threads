@@ -9,6 +9,10 @@ export enum ACCOUNT {
 export enum THREADS {
   LIST = "/threads/",
   ADD = "/threads/",
+
+export enum ATTACHMENTS {
+  ADD = "/threadAttachments/",
+  GET = "/threadAttachments/",
 }
 
 export enum PROFILE {

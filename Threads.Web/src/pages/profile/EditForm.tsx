@@ -34,7 +34,7 @@ const EditForm = ({ accountProfile, onSucceed }: EditFormProps) => {
     email: Yup.string().required("This field is required!"),
   });
 
-  const handleLogin = (values: AccountProfile) => {
+  const handleSubmit = (values: AccountProfile) => {
     setValidationErrors(undefined);
     setLoading(true);
     updateProfileAccount(values)
@@ -58,7 +58,7 @@ const EditForm = ({ accountProfile, onSucceed }: EditFormProps) => {
   return (
     <Formik
       validationSchema={validationSchema}
-      onSubmit={handleLogin}
+      onSubmit={handleSubmit}
       initialValues={accountProfile}
     >
       {({ handleSubmit, handleChange, values, errors }) => (

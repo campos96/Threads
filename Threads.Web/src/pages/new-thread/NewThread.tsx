@@ -8,7 +8,7 @@ import PATHS from "../../routes/paths";
 import * as formik from "formik";
 import * as Yup from "yup";
 import { Thread, ThreadReply, ThreadType } from "../../types/Thread";
-import { addThread } from "../../services/threads.service";
+import { postThread, postThreadPicture } from "../../services/threads.service";
 import { ApiResponseError } from "../../types/ApiResponse";
 import ValidationErrors from "../../components/alerts/ValidationErrors";
 import { useNavigate } from "react-router-dom";
@@ -25,10 +25,19 @@ const NewThread = () => {
   const handleSubmit = (values: Thread) => {
     console.log(values);
     setLoading(true);
-    addThread(values).then(
+    postThread(values).then(
       (response) => {
         if (response.status === 200) {
-          navigate(PATHS.HOME);
+          if (threadPicture) {
+            const thread = response.payload as Thread;
+            postThreadPicture(thread.id, threadPicture).then((response) => {
+              if (response.status === 200) {
+                navigate(PATHS.HOME);
+              }
+            });
+          } else {
+            navigate(PATHS.HOME);
+          }
         } else {
           setValidationErrors(response.errors);
         }

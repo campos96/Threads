@@ -34,7 +34,7 @@ const ProfileThreads = ({ username }: { username: string }) => {
     <>
       {loading && (
         <div className="p-md-3 text-center text-muted">
-          <h3>Loading Profile...</h3>
+          <h3>Loading threds...</h3>
           <Spinner animation="border" className="mt-3" />
         </div>
       )}
