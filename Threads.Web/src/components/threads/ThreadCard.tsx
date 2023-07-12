@@ -3,25 +3,72 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import Thread from "../../types/Thread";
 import PATHS from "../../routes/paths";
-import { API_URL, PROFILE } from "../../routes/endpoints";
+import { API_URL, ATTACHMENTS, PROFILE } from "../../routes/endpoints";
 import timeElapsed from "../../utils/threadTimeElapsed";
+import { useCallback, useEffect, useState } from "react";
+import {
+  getThread,
+} from "../../services/threads.service";
+import { userIdentity } from "../../services/identity.service";
 
-const ThreadCard = ({ props }: { props: Thread }) => {
+const ThreadCard = ({ threadId }: { threadId: string }) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [thread, setThread] = useState<Thread>();
+
+  const getThreadDetails = useCallback(() => {
+    setLoading(true);
+    getThread(threadId)
+      .then(
+        (response) => {
+          if (response.status === 200) {
+            setThread(response.payload as Thread);
+          } else {
+            //setShowModal(false);
+          }
+        },
+        (error) => {
+          //setShowModal(false);
+        }
+      )
+      .then(() => setLoading(false));
+  }, [threadId]);
+
+  const handleLikeThread = () => {
+    postThreadLike(threadId, userIdentity()!.id).then((response) => {
+      if (response.status === 200) {
+        getThreadDetails();
+      }
+    });
+  };
+
+  useEffect(() => {
+    getThreadDetails();
+  }, [getThreadDetails]);
+
   return (
     props && (
       <Card className="shadow-sm mb-1 mb-sm-2 mb-md-3">
         <Card.Body>
+        {thread && (
+          <>
           <Row>
             <Col xs="auto" className="overflow-hidden">
-              <Image src={API_URL + PROFILE.GET_PHOTO + props.account!.username} roundedCircle width={50} />
-              {props.replies > 0 && <div className="thread-line"></div>}
+                <Image
+                  src={API_URL + PROFILE.GET_PHOTO + thread.account!.username}
+                  roundedCircle
+                  width={50}
+                />
+                {thread.replies > 0 && <div className="thread-line"></div>}
             </Col>
             <Col className="ps-0">
               <Row>
                 <Col>
                   <div className="d-flex float-start gap-1 align-items-center">
-                    <a href={PATHS.PROFILE + props.account?.username} className="link-text">
-                      <strong>{props.account?.username}</strong>
+                      <a
+                        href={PATHS.PROFILE + thread.account?.username}
+                        className="link-text"
+                      >
+                        <strong>{thread.account?.username}</strong>
                     </a>
                     {/* <FontAwesomeIcon
                       icon={icon({ name: "circle-check" })}
@@ -40,18 +87,21 @@ const ThreadCard = ({ props }: { props: Thread }) => {
               </Row>
               <Row>
                 <Col>
-                  <p className="mb-2">{props.description}</p>
+                    <div style={{ whiteSpace: "pre-wrap" }}>
+                      <p className="mb-2">{thread.description}</p>
+                    </div>
                 </Col>
               </Row>
-              {props.attachments.length > 0 && (
-                <div className="mb-2">
+                {thread.attachments.length > 0 &&
+                  thread.attachments.map((attachment, index) => (
+                    <div key={index} className="mb-2">
                   <Image
-                    src="https://picsum.photos/300/200"
+                        src={API_URL + ATTACHMENTS.GET + attachment.id}
                     rounded
-                    className="w-100"
+                        className="img-thumbnail w-100"
                   />
                 </div>
-              )}
+                  ))}
               <Row>
                 <Col>
                   <div className="d-flex gap-2">
@@ -78,7 +128,9 @@ const ThreadCard = ({ props }: { props: Thread }) => {
               </Row>
             </Col>
           </Row>
-          <ThreadCardFooter props={props} />
+            <ThreadCardFooter props={thread} />
+          </>
+        )}
         </Card.Body>
       </Card>
     )
@@ -88,7 +140,7 @@ const ThreadCard = ({ props }: { props: Thread }) => {
 const ThreadCardFooter = ({ props }: { props: Thread }) => {
   return (
     <Row>
-      <Col sm="auto">
+      <Col xs="auto">
         {props.replies >= 3 && (
           <div style={{ width: 50 }}>
             <Image
@@ -133,7 +185,10 @@ const ThreadCardFooter = ({ props }: { props: Thread }) => {
           {props.replies > 0 && props.likes > 0 && (
             <small className="text-muted">-</small>
           )}
-          {props.likes > 0 && (
+          {props.likes === 1 && (
+            <small className="text-muted">{props.likes} like</small>
+          )}
+          {props.likes > 1 && (
             <small className="text-muted">{props.likes} likes</small>
           )}
         </div>

@@ -6,14 +6,8 @@ const Threads = ({ items }: { items: Array<Thread> }) => {
   return (
     <>
       {items.map((thread, index) => (
-        <ThreadCard props={thread} key={index} />
+        <ThreadCard threadId={thread.id} key={index} />
       ))}
-      <hr />
-      <h5 className="text-center">Demo</h5>
-      <hr />
-      <ThreadCardDesign />
-      <ThreadCardDesign />
-      <ThreadCardDesign />
     </>
   );
 };

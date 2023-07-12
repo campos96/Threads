@@ -10,7 +10,14 @@ export const getThreads = () => {
   }).then((response) => response);
 };
 
-export const addThread = (thread: Thread) => {
+export const getThread = (threadId: string) => {
+  return request(API_URL + THREADS.LIST + threadId, {
+    method: "GET",
+    headers: headers(),
+  }).then((response) => response);
+};
+
+export const postThread = (thread: Thread) => {
   return request(API_URL + THREADS.ADD, {
     method: "POST",
     headers: headers(),
