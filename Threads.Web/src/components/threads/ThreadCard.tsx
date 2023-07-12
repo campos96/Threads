@@ -4,6 +4,7 @@ import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import Thread from "../../types/Thread";
 import PATHS from "../../routes/paths";
 import { API_URL, PROFILE } from "../../routes/endpoints";
+import timeElapsed from "../../utils/threadTimeElapsed";
 
 const ThreadCard = ({ props }: { props: Thread }) => {
   return (
@@ -29,7 +30,7 @@ const ThreadCard = ({ props }: { props: Thread }) => {
                   </div>
                   <div className="d-flex float-end gap-1 align-items-center">
                     <small className="text-muted">
-                      {props.created.toLocaleString()}
+                        {timeElapsed(thread.created)}
                     </small>
                     <Button variant="text" className="btn-icon">
                       <FontAwesomeIcon icon={icon({ name: "ellipsis" })} />
