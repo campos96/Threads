@@ -6,7 +6,11 @@ const AppNavbar = () => {
   var user = userIdentity();
 
   return (
-    <Navbar expand="sm" className="bg-white border-bottom shadow-sm">
+    <Navbar
+      expand="sm"
+      fixed="top"
+      className="bg-white border-bottom shadow-sm"
+    >
       <Container fluid>
         <Navbar.Brand href={PATHS.HOME}>Threads</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarSupportedContent" />
@@ -21,7 +25,9 @@ const AppNavbar = () => {
               <Col>
                 <Nav className="me-auto mb-2 mb-sm-0">
                   <Nav.Item>
-                    <Nav.Link href={PATHS.PROFILE + userIdentity()?.username}>{user?.name}</Nav.Link>
+                    <Nav.Link href={PATHS.PROFILE + userIdentity()?.username}>
+                      {user?.name}
+                    </Nav.Link>
                   </Nav.Item>
                   <Button variant="outline-danger" href={PATHS.LOGOUT}>
                     Log out

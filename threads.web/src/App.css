@@ -95,6 +95,42 @@ body {
 
 /* Navtabs */
 
+
+/* Smartphone Menu */
+
+.smartphone-menu {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 1rem 0 #d8dbe9
+}
+
+.smartphone-menu a {
+    flex: 1;
+    text-decoration: none;
+    color: #777;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.smartphone-menu a:hover {
+    color: #000;
+}
+
+.smartphone-menu a:active {
+    background-color: #e8f1f1;
+    color: #008080;
+    /* border: 1px solid #008080; */
+}
+
+/* Smartphone Menu */
+
 .card {
     border-radius: 1rem !important;
     /* box-shadow: 0 0 1rem 0 #d8dbe9 !important; */
@@ -102,7 +138,7 @@ body {
 }
 
 .card .card-body {
-    padding: 1.5rem !important;
+    padding: 0.75rem !important;
 }
 
 .card .card-body .card-title {
@@ -234,3 +270,22 @@ form .btn .spinner-border {
     background-color: #006d6d;
     border-color: #006d6d;
 }
+
+/* // Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    .card .card-body {
+        padding: 1.5rem !important;
+    }
+}
+
+/* // Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {}
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {}
+
+/* // X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {}
+
+/* // XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {}
