@@ -73,13 +73,15 @@ const Header = ({ profile }: { profile: Profile }) => {
                 <h6 className="text-secondary">
                   <strong>{profile.account?.username}</strong>
                 </h6>
-                <Button
-                  href={PATHS.PROFILE_EDIT}
-                  size="sm"
-                  variant="outline-dark"
-                >
-                  Edit profile
-                </Button>
+                {profile.accountId === userIdentity()!.id && (
+                  <Button
+                    href={PATHS.PROFILE_EDIT}
+                    size="sm"
+                    variant="outline-dark"
+                  >
+                    Edit profile
+                  </Button>
+                )}
               </div>
             </Col>
             <Col xs={3} className="d-flex align-items-center ps-0">
@@ -89,13 +91,15 @@ const Header = ({ profile }: { profile: Profile }) => {
                   roundedCircle
                   className="img-thumbnail w-100"
                 />
-                <Button
-                  onClick={() => handleShowModal(true)}
-                  variant="light"
-                  className="position-absolute end-0 bottom-0 start-0 btn-floating-circle"
-                >
-                  <FontAwesomeIcon icon={icon({ name: "pencil" })} />
-                </Button>
+                {profile.accountId === userIdentity()!.id && (
+                  <Button
+                    onClick={() => handleShowModal(true)}
+                    variant="light"
+                    className="position-absolute end-0 bottom-0 start-0 btn-floating-circle"
+                  >
+                    <FontAwesomeIcon icon={icon({ name: "pencil" })} />
+                  </Button>
+                )}
               </div>
             </Col>
           </Row>
