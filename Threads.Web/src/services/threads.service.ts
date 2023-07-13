@@ -18,18 +18,25 @@ export const getThread = (threadId: string) => {
   }).then((response) => response);
 };
 
+export const getThreadLike = (threadId: string, accountId: string) => {
+  return request(API_URL + THREADS.GET_LIKE + threadId + `/${accountId}/`, {
+    method: "GET",
+    headers: headers(),
+  }).then((response) => response);
+};
+
+export const getThreadRepliers = (threadId: string) => {
+  return request(API_URL + THREADS.REPLIERS + threadId, {
+    method: "GET",
+    headers: headers(),
+  }).then((response) => response);
+};
+
 export const postThread = (thread: Thread) => {
   return request(API_URL + THREADS.ADD, {
     method: "POST",
     headers: headers(),
     body: JSON.stringify(thread),
-  }).then((response) => response);
-};
-
-export const getThreadLike = (threadId: string, accountId: string) => {
-  return request(API_URL + THREADS.GET_LIKE + threadId + `/${accountId}/`, {
-    method: "GET",
-    headers: headers(),
   }).then((response) => response);
 };
 

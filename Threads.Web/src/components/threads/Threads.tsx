@@ -1,6 +1,5 @@
 import { Thread } from "../../types/Thread";
 import ThreadCard from "./ThreadCard";
-import ThreadCardDesign from "./ThreadCardDesign";
 
 const Threads = ({ items }: { items: Array<Thread> }) => {
   return (
