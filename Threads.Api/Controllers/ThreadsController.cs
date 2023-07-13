@@ -69,6 +69,25 @@ namespace Threads.Api.Controllers
             return ApiResult.Ok(payload: thread);
         }
 
+        // GET: api/Threads/Repliers/5
+        [HttpGet("Repliers/{threadId}")]
+        public async Task<ActionResult<Account>> GetThreadRepliers(Guid threadId)
+        {
+            if (threadId == Guid.Empty)
+            {
+                return ApiResult.BadRequest();
+            }
+
+            var repliers = await _context.Threads
+                .Include(t => t.Account)
+                .Where(t => t.RepliedThreadId == threadId)
+                .OrderByDescending(t => t.Created)
+                .Select(t => t.Account)
+                .ToListAsync();
+
+            return ApiResult.Ok(payload: repliers);
+        }
+
         // PUT: api/Threads/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutThread(Guid id, Core.Models.Thread thread)
