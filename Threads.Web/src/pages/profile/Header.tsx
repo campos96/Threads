@@ -95,7 +95,7 @@ const Header = ({ profile }: { profile: Profile }) => {
                   <Button
                     onClick={() => handleShowModal(true)}
                     variant="light"
-                    className="position-absolute end-0 bottom-0 start-0 btn-floating-circle"
+                    className="position-absolute bottom-0 start-0 btn-floating-circle"
                   >
                     <FontAwesomeIcon icon={icon({ name: "pencil" })} />
                   </Button>

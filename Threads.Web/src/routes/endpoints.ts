@@ -1,7 +1,4 @@
-const PRO_API = "http://campos-001-site1.atempurl.com/api";
-const DEV_API = "https://localhost:7145/api";
-
-export const API_URL = PRO_API;
+export const API_URL = process.env.REACT_APP_API_URL;
 
 export enum ACCOUNT {
   GET = "/account/",
