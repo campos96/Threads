@@ -99,7 +99,7 @@ const LoginForm = ({ onAuthSucceed = () => {} }) => {
             >
               Forgot password?
             </a>
-            <Button variant="primary" type="submit" className="float-end">
+            <Button variant="teal" type="submit" className="float-end">
               {loading && <Spinner animation="border" size="sm"></Spinner>}
               <span>Log in</span>
             </Button>

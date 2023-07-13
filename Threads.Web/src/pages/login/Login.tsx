@@ -29,7 +29,7 @@ const Login = () => {
           <Col>
             <hr />
             <p>Don't have an account?</p>
-            <Button href={PATHS.SIGNUP} variant="outline-primary">
+            <Button href={PATHS.SIGNUP} variant="outline-teal">
               Sign up
             </Button>
           </Col>

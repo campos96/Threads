@@ -13,10 +13,10 @@ const AppNavbar = () => {
           </Nav>
           <div className="d-flex">
             <ButtonGroup className="gap-3">
-              <Button href={PATHS.LOGIN} variant="primary">
+              <Button href={PATHS.LOGIN} variant="teal">
                 Log in
               </Button>
-              <Button href={PATHS.SIGNUP} variant="outline-primary">
+              <Button href={PATHS.SIGNUP} variant="outline-teal">
                 Sign up
               </Button>
             </ButtonGroup>

@@ -140,6 +140,7 @@ const Header = ({ profile }: { profile: Profile }) => {
           <input
             id="profileFile"
             type="file"
+            accept="image/png, image/gif, image/jpeg"
             className="d-none"
             ref={hiddenFileInput}
             onChange={saveFileSelected}
@@ -151,7 +152,7 @@ const Header = ({ profile }: { profile: Profile }) => {
               onClick={() => {
                 return hiddenFileInput.current?.click();
               }}
-              className="text-primary"
+              className="text-teal"
             >
               <strong>Upload Photo</strong>
             </ListGroupItem>

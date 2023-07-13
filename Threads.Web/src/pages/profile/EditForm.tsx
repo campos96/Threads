@@ -195,7 +195,7 @@ const EditForm = ({ accountProfile, onSucceed }: EditFormProps) => {
             >
               Back to profile
             </Button>
-            <Button variant="primary" type="submit" className="float-end">
+            <Button variant="teal" type="submit" className="float-end">
               {loading && <Spinner animation="border" size="sm" />}
               <span> Submit</span>
             </Button>

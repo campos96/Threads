@@ -121,7 +121,7 @@ const SignupForm = ({ onSucceed = () => {} }) => {
           {validationErrors && <ValidationErrors list={validationErrors} />}
 
           <Form.Group className="mb-3">
-            <Button variant="primary" type="submit" className="float-end">
+            <Button variant="teal" type="submit" className="float-end">
               {loading && <Spinner animation="border" size="sm" />}
               <span>Submit</span>
             </Button>

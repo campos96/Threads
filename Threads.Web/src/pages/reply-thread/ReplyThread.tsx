@@ -128,7 +128,8 @@ const ReplyThread = () => {
 
                   <input
                     id="profileFile"
-                    type="file"
+                    type="file" 
+                    accept="image/png, image/gif, image/jpeg"
                     className="d-none"
                     ref={hiddenFileInput}
                     onChange={handleFileSelected}
@@ -189,7 +190,7 @@ const ReplyThread = () => {
                   <Button variant="outline-dark" href={PATHS.HOME}>
                     Cancel
                   </Button>
-                  <Button variant="primary" className="float-end" type="submit">
+                  <Button variant="teal" className="float-end" type="submit">
                     {loading && <Spinner animation="border" size="sm" />}
                     <span> Post</span>
                   </Button>

@@ -226,10 +226,10 @@ form .btn .spinner-border {
 }
 
 .btn-floating-circle {
-    border-radius: 100%;
+    border-radius: 100% !important;
     box-shadow: 0 0 0.5rem 0 #aaa !important;
     padding: 10px !important;
-    display: flex;
+    display: flex !important;
 }
 
 .btn-image-close {

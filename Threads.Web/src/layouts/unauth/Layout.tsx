@@ -10,7 +10,7 @@ const Layout = () => {
         <Navbar />
       </header>
       <main>
-        <Container fluid="xxl" className="mt-5">
+        <Container fluid="xxl" className="mt-3">
           <Outlet />
         </Container>
       </main>
