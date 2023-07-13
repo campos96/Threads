@@ -9,6 +9,7 @@ import Home from "../pages/home/Home";
 import ProfileIndex from "../pages/profile/Index";
 import EditProfile from "../pages/profile/Edit";
 import NewThread from "../pages/new-thread/NewThread";
+import ReplyThread from "../pages/reply-thread/ReplyThread";
 
 const Router = () => {
   return (
@@ -24,6 +25,7 @@ const Router = () => {
         <Route path="profile/:username" element={<ProfileIndex />} />
         <Route path="profile/edit" element={<EditProfile />} />
         <Route path="threads/new" element={<NewThread />} />
+        <Route path="threads/reply/:threadId" element={<ReplyThread />} />
       </Route>
     </Routes>
   );

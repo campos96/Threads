@@ -35,5 +35,3 @@ export enum ThreadReply {
   Following = 2,
   Mentioned = 3,
 }
-
-export default Thread;

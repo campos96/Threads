@@ -1,4 +1,4 @@
-import Thread from "../../types/Thread";
+import { Thread } from "../../types/Thread";
 import ThreadCard from "./ThreadCard";
 import ThreadCardDesign from "./ThreadCardDesign";
 

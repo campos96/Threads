@@ -2,7 +2,7 @@ import { Card, Spinner } from "react-bootstrap";
 import { getThreads } from "../../services/threads.service";
 import { useEffect, useState } from "react";
 import Threads from "../../components/threads/Threads";
-import Thread from "../../types/Thread";
+import { Thread } from "../../types/Thread";
 
 const Home = () => {
   const [loading, setLoading] = useState<boolean>(false);

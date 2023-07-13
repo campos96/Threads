@@ -1,21 +1,13 @@
-import { Button, Card, Col, Row, Image } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
-import Thread from "../../types/Thread";
-import PATHS from "../../routes/paths";
-import { API_URL, ATTACHMENTS, PROFILE } from "../../routes/endpoints";
-import timeElapsed from "../../utils/threadTimeElapsed";
+import { Card, Spinner } from "react-bootstrap";
 import { useCallback, useEffect, useState } from "react";
-import {
-  getThread,
-  getThreadLike,
-  postThreadLike,
-} from "../../services/threads.service";
-import { userIdentity } from "../../services/identity.service";
+import { getThread } from "../../services/threads.service";
+import { Thread } from "../../types/Thread";
+import ThreadHeader from "./ThreadHeader";
+import ThreadFooter from "./ThreadFooter";
 
 const ThreadCard = ({ threadId }: { threadId: string }) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [likedThread, setLikedThread] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
   const [thread, setThread] = useState<Thread>();
 
   const getThreadDetails = useCallback(() => {
@@ -25,191 +17,68 @@ const ThreadCard = ({ threadId }: { threadId: string }) => {
         (response) => {
           if (response.status === 200) {
             setThread(response.payload as Thread);
-            getThreadLike(threadId, userIdentity()!.id).then((response) => {
-              setLikedThread(response.status === 200);
-            });
           } else {
-            //setShowModal(false);
+            setError(true);
           }
         },
         (error) => {
-          //setShowModal(false);
+          setError(true);
         }
       )
       .then(() => setLoading(false));
   }, [threadId]);
 
-  const handleLikeThread = () => {
-    postThreadLike(threadId, userIdentity()!.id).then((response) => {
-      if (response.status === 200) {
-        getThreadDetails();
-      }
-    });
-  };
-
   useEffect(() => {
     getThreadDetails();
   }, [getThreadDetails]);
 
+  const handleUpdate = () => {
+    getThreadDetails();
+  };
+
   return (
-    <Card className="shadow-sm mb-1 mb-sm-2 mb-md-3">
-      <Card.Body>
-        {thread && (
-          <>
-            <Row>
-              <Col xs="auto" className="overflow-hidden">
-                <Image
-                  src={API_URL + PROFILE.GET_PHOTO + thread.account!.username}
-                  roundedCircle
-                  width={50}
+    <>
+      {thread && (
+        <Card className="shadow-sm mb-1 mb-sm-2 mb-md-3 overflow-hidden">
+          <Card.Body>
+            {thread.repliedThreadId && (
+              <>
+                <ThreadHeader
+                  threadId={thread.repliedThreadId}
+                  handleUpdate={handleUpdate}
                 />
-                {thread.replies > 0 && <div className="thread-line"></div>}
-              </Col>
-              <Col className="ps-0">
-                <Row>
-                  <Col>
-                    <div className="d-flex float-start gap-1 align-items-center">
-                      <a
-                        href={PATHS.PROFILE + thread.account?.username}
-                        className="link-text"
-                      >
-                        <strong>{thread.account?.username}</strong>
-                      </a>
-                      {/* <FontAwesomeIcon
-                      icon={icon({ name: "circle-check" })}
-                      className="verified-icon"
-                    /> */}
-                    </div>
-                    <div className="d-flex float-end gap-1 align-items-center">
-                      <small className="text-muted">
-                        {timeElapsed(thread.created)}
-                      </small>
-                      <Button variant="text" className="btn-icon">
-                        <FontAwesomeIcon icon={icon({ name: "ellipsis" })} />
-                      </Button>
-                    </div>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ whiteSpace: "pre-wrap" }}>
-                      <p className="mb-2">{thread.description}</p>
-                    </div>
-                  </Col>
-                </Row>
-                {thread.attachments.length > 0 &&
-                  thread.attachments.map((attachment, index) => (
-                    <div key={index} className="mb-2">
-                      <Image
-                        src={API_URL + ATTACHMENTS.GET + attachment.id}
-                        rounded
-                        className="img-thumbnail w-100"
-                      />
-                    </div>
-                  ))}
-                <Row>
-                  <Col>
-                    <div className="d-flex gap-2">
-                      <Button
-                        variant="text"
-                        className="btn-icon"
-                        onClick={handleLikeThread}
-                      >
-                        {likedThread && (
-                          <FontAwesomeIcon
-                            className="text-danger"
-                            icon={icon({ name: "heart" })}
-                          />
-                        )}
-                        {!likedThread && (
-                          <FontAwesomeIcon
-                            icon={icon({ style: "regular", name: "heart" })}
-                          />
-                        )}
-                      </Button>
-                      {/* <Button variant="text" className="btn-icon">
-                      <FontAwesomeIcon
-                        icon={icon({ style: "regular", name: "comment" })}
-                      />
-                    </Button> */}
-                      {/* <Button variant="text" className="btn-icon">
-                      <FontAwesomeIcon icon={icon({ name: "retweet" })} />
-                    </Button>
-                    <Button variant="text" className="btn-icon">
-                      <FontAwesomeIcon
-                        icon={icon({ style: "regular", name: "paper-plane" })}
-                      />
-                    </Button> */}
-                    </div>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-            <ThreadCardFooter props={thread} />
-          </>
-        )}
-      </Card.Body>
-    </Card>
-  );
-};
-
-const ThreadCardFooter = ({ props }: { props: Thread }) => {
-  return (
-    <Row>
-      <Col xs="auto">
-        {props.replies >= 3 && (
-          <div style={{ width: 50 }}>
-            <Image
-              src="https://i.pravatar.cc/300"
-              roundedCircle
-              style={{ width: 17, marginRight: 3 }}
+                <ThreadFooter
+                  threadId={thread.repliedThreadId}
+                  replied={true}
+                />
+              </>
+            )}
+            <ThreadHeader
+              threadId={threadId}
+              filledThread={thread}
+              handleUpdate={handleUpdate}
             />
-            <Image src="https://i.pravatar.cc/300" roundedCircle width={30} />
-            <Image
-              src="https://i.pravatar.cc/300"
-              roundedCircle
-              width={25}
-              style={{ marginTop: -11, marginLeft: 2 }}
-            />
-          </div>
-        )}
+            <ThreadFooter threadId={threadId} filledThread={thread} />
+            {loading && (
+              <div
+                className="position-absolute top-0 start-0 w-100 h-100 d-flex 
+              align-items-center justify-content-center bg-light bg-opacity-50 p-md-3"
+              >
+                <Spinner animation="border" className="mt-3" />
+              </div>
+            )}
+          </Card.Body>
+        </Card>
+      )}
 
-        {props.replies >= 2 && (
-          <div style={{ width: 50 }}>
-            <Image
-              src="https://i.pravatar.cc/300"
-              roundedCircle
-              style={{ marginLeft: 12, width: 25 }}
-            />
-          </div>
-        )}
-
-        {props.replies >= 1 && (
-          <div style={{ width: 50 }}>
-            <Image src="https://i.pravatar.cc/300" roundedCircle width={25} />
-            <Image src="https://i.pravatar.cc/300" roundedCircle width={25} />
-          </div>
-        )}
-
-        {props.replies === 0 && <div style={{ width: 50 }}></div>}
-      </Col>
-      <Col className="d-flex ps-0">
-        <div className="d-flex float-start gap-2 align-items-center">
-          {props.replies > 0 && (
-            <small className="text-muted">{props.replies} replies</small>
-          )}
-          {props.replies > 0 && props.likes > 0 && (
-            <small className="text-muted">-</small>
-          )}
-          {props.likes === 1 && (
-            <small className="text-muted">{props.likes} like</small>
-          )}
-          {props.likes > 1 && (
-            <small className="text-muted">{props.likes} likes</small>
-          )}
+      {error && (
+        <div className="p-md-5 text-center text-muted">
+          <h1>Opps!</h1>
+          <h3>Something went wrong</h3>
+          <p>Please try again later...</p>
         </div>
-      </Col>
-    </Row>
+      )}
+    </>
   );
 };
 

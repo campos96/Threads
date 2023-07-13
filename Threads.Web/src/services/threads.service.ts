@@ -1,5 +1,5 @@
 import { API_URL, ATTACHMENTS, THREADS } from "../routes/endpoints";
-import Thread from "../types/Thread";
+import { Thread } from "../types/Thread";
 import ThreadLike from "../types/ThreadLike";
 import headers from "./headers";
 import request from "./request";
@@ -39,7 +39,7 @@ export const postThreadPicture = (threadId: string, picture: File) => {
   return request(API_URL + ATTACHMENTS.ADD + threadId, {
     method: "POST",
     headers: {
-      Authorization: "Bearer " + headers().Authorization,
+      Authorization: headers().Authorization,
     },
     body: formData,
   }).then((response) => response);

@@ -16,7 +16,7 @@ import { ChangeEvent, useRef, useState } from "react";
 import { userIdentity } from "../../services/identity.service";
 import {
   deleteProfilePhoto,
-  setProfilePhoto,
+  postProfilePhoto,
 } from "../../services/profile.service";
 import { API_URL, PROFILE } from "../../routes/endpoints";
 
@@ -26,7 +26,7 @@ const Header = ({ profile }: { profile: Profile }) => {
 
   const saveFileSelected = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files !== null) {
-      setProfilePhoto(userIdentity()!.id, e.target.files[0]).then(
+      postProfilePhoto(userIdentity()!.id, e.target.files[0]).then(
         (response) => {
           if (response.status === 200) {
             window.location.reload();

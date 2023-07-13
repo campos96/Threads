@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getThreads } from "../../services/profile.service";
-import Thread from "../../types/Thread";
+import { Thread } from "../../types/Thread";
 import { Spinner } from "react-bootstrap";
 import Threads from "../../components/threads/Threads";
 

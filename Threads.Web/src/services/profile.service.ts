@@ -32,13 +32,13 @@ export const getThreads = (username: string) => {
   }).then((response) => response);
 };
 
-export const setProfilePhoto = (accountid: string, photo: File) => {
+export const postProfilePhoto = (accountid: string, photo: File) => {
   const formData = new FormData();
   formData.append("photo", photo);
   return request(API_URL + PROFILE.SET_PHOTO + accountid, {
     method: "POST",
     headers: {
-      Authorization: "Bearer " + headers().Authorization,
+      Authorization: headers().Authorization,
     },
     body: formData,
   }).then((response) => response);
