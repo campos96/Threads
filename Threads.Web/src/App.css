@@ -207,6 +207,17 @@ form .btn .spinner-border {
     height: 100%;
 }
 
+.thread-line-circle {
+    position: absolute;
+    background-color: #008080;
+    border-radius: 100%;
+    width:8px;
+    height: 8px;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+}
+
 .link-dark {
     color: #888 !important;
     text-decoration: none;

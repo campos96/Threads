@@ -42,11 +42,11 @@ const ThreadFooter = ({
               </>
             )}
             {replied && thread.replies > 1 && (
-              <>
-                <div style={{ width: 50 }}>
-                  <Image src={thradReplied} className="w-100" />
-                </div>
-              </>
+              <div className="position-relative">
+                <div className="bg-primary" style={{ width: 50 }}></div>
+                <div className="thread-line" style={{ height: 30 }}></div>
+                <div className="thread-line-circle"></div>
+              </div>
             )}
 
             {!replied && thread.replies === 0 && (
