@@ -11,12 +11,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+var allowedOrigins = builder.Configuration
+    .GetSection("CorsPolicy:Origins")
+    .GetChildren()
+    .Select(o => o.Value).ToArray();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: AllowedApiClients,
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000");
+            policy.WithOrigins(allowedOrigins);
             policy.WithHeaders("*");
             policy.WithMethods("*");
         });
@@ -30,7 +35,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
 );
 
-builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
 builder.Services.AddAuthentication(options =>
 {
