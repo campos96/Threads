@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Threads.Api.Data;
 using Threads.Api.Models;
@@ -6,6 +7,7 @@ using Threads.Core.Models;
 
 namespace Threads.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProfilesController : ControllerBase
@@ -101,6 +103,7 @@ namespace Threads.Api.Controllers
 
 
         // GET: api/profiles/photo/{username}
+        [AllowAnonymous]
         [HttpGet("photo/{username}")]
         public async Task<ActionResult> GetPhoto(string username)
         {

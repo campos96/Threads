@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Threads.Api.Data;
 using Threads.Core.Models;
 
 namespace Threads.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ThreadAttachmentsController : ControllerBase
@@ -17,6 +19,7 @@ namespace Threads.Api.Controllers
         }
 
         // GET: api/ThreadAttachments/{id}
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetAttachment(Guid id)
         {
