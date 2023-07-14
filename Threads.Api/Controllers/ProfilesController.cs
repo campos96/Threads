@@ -207,8 +207,8 @@ namespace Threads.Api.Controllers
             }
         }
 
-        // PUT: api/Profiles/username
-        [HttpGet("threads/{username}")]
+        // PUT: api/Profiles/Threads/username
+        [HttpGet("Threads/{username}")]
         public async Task<ActionResult<IEnumerable<Core.Models.Thread>>> GetThreads(string username)
         {
             if (_context.Threads == null)
@@ -217,7 +217,25 @@ namespace Threads.Api.Controllers
             }
 
             var threads = await _context.Threads
-                .Where(t => t.Account!.Username == username)
+                .Where(t => t.Account!.Username == username && t.RepliedThreadId == null)
+                .OrderByDescending(t => t.Created)
+                .ToListAsync();
+
+            return ApiResult.Ok(payload: threads);
+        }
+
+
+        // PUT: api/Profiles/Replies/username
+        [HttpGet("Replies/{username}")]
+        public async Task<ActionResult<IEnumerable<Core.Models.Thread>>> GetReplies(string username)
+        {
+            if (_context.Threads == null)
+            {
+                return ApiResult.NotFound();
+            }
+
+            var threads = await _context.Threads
+                .Where(t => t.Account!.Username == username && t.RepliedThreadId != null)
                 .OrderByDescending(t => t.Created)
                 .ToListAsync();
 
