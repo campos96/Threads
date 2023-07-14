@@ -32,6 +32,13 @@ export const getThreadRepliers = (threadId: string) => {
   }).then((response) => response);
 };
 
+export const getThreadLikes = (threadId: string) => {
+  return request(API_URL + THREADS.GET_LIKES + threadId, {
+    method: "GET",
+    headers: headers(),
+  }).then((response) => response);
+};
+
 export const postThread = (thread: Thread) => {
   return request(API_URL + THREADS.ADD, {
     method: "POST",

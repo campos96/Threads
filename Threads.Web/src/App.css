@@ -219,8 +219,9 @@ form .btn .spinner-border {
 }
 
 .link-dark {
-    color: #888 !important;
+    color: #777 !important;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .link-dark:hover {

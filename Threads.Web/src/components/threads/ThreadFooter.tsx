@@ -1,10 +1,21 @@
-import { Row, Col, Image } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Image,
+  Modal,
+  ListGroup,
+  ListGroupItem,
+} from "react-bootstrap";
 import { Thread } from "../../types/Thread";
 import { useEffect, useState } from "react";
-import { getThread, getThreadRepliers } from "../../services/threads.service";
+import {
+  getThread,
+  getThreadLikes,
+  getThreadRepliers,
+} from "../../services/threads.service";
 import Account from "../../types/Account";
-import PATHS from "../../routes/paths";
 import { API_URL, PROFILE } from "../../routes/endpoints";
+import PATHS from "../../routes/paths";
 
 type ThreadFooterProps = {
   threadId: string;
@@ -17,7 +28,9 @@ const ThreadFooter = ({
   filledThread,
   replied,
 }: ThreadFooterProps) => {
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [thread, setThread] = useState<Thread>();
+  const [threadLikeList, setThreadLikeList] = useState<Array<Account>>();
 
   useEffect(() => {
     if (filledThread) {
@@ -31,6 +44,16 @@ const ThreadFooter = ({
       });
     }
   }, [threadId, filledThread]);
+
+  const handleShowModal = (show: boolean) => {
+    getThreadLikes(threadId).then((response) => {
+      if (response.status === 200) {
+        const threadLikes = response.payload as Array<Account>;
+        setThreadLikeList(threadLikes);
+      }
+    });
+    setShowModal(show);
+  };
 
   return (
     <>
@@ -64,22 +87,63 @@ const ThreadFooter = ({
               className="d-flex float-start gap-2 align-items-center text-secondary"
               style={{ fontSize: 14, fontWeight: 500 }}
             >
-              {thread.replies === 1 && <small>{thread.replies} reply</small>}
-              {thread.replies > 1 && <small>{thread.replies} replies</small>}
+              {thread.replies > 0 && (
+                <small className="link-dark">
+                  {thread.replies} {thread.replies > 1 ? "replies" : "Reply"}
+                </small>
+              )}
               {thread.replies > 0 && thread.likes > 0 && <small>-</small>}
-              {thread.likes === 1 && <small>{thread.likes} like</small>}
-              {thread.likes > 1 && <small>{thread.likes} likes</small>}
+              {thread.likes > 0 && (
+                <small
+                  className="link-dark"
+                  onClick={() => handleShowModal(true)}
+                >
+                  {thread.likes} like{thread.likes > 1 && "s"}
+                </small>
+              )}
             </div>
           </Col>
         </Row>
       )}
+      <Modal centered show={showModal} onHide={() => handleShowModal(false)}>
+        <Modal.Header closeButton className="border-0"></Modal.Header>
+        <Modal.Body className="p-0">
+          <Modal.Title className="text-center">Likes</Modal.Title>
+          <ListGroup className="mt-3">
+            {threadLikeList &&
+              threadLikeList.map((threadLike, index) => (
+                <ListGroupItem
+                  key={index}
+                  action
+                  href={PATHS.PROFILE + threadLike.username}
+                >
+                  <Row>
+                    <Col xs="auto">
+                      <div style={{ width: 50 }}>
+                        <Image
+                          src={
+                            API_URL + PROFILE.GET_PHOTO + threadLike.username
+                          }
+                          className="rounded-circle w-100"
+                        />
+                      </div>
+                    </Col>
+                    <Col>
+                      <strong className="d-block">{threadLike.username}</strong>
+                      <small className="d-block">{threadLike.fullName}</small>
+                    </Col>
+                  </Row>
+                </ListGroupItem>
+              ))}
+          </ListGroup>
+        </Modal.Body>
+      </Modal>
     </>
   );
 };
 
 const ThreadFooterRepliers = ({ threadId }: { threadId: string }) => {
   const [repliers, setRepliers] = useState<Array<Account>>([]);
-  const replies: number = 2;
 
   useEffect(() => {
     getThreadRepliers(threadId).then((response) => {
@@ -96,6 +160,7 @@ const ThreadFooterRepliers = ({ threadId }: { threadId: string }) => {
         {repliers &&
           repliers.map((replier, index) => (
             <Image
+              key={index}
               src={API_URL + PROFILE.GET_PHOTO + replier.username}
               roundedCircle
               style={{ width: 50 / repliers.length }}

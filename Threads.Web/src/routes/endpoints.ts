@@ -11,6 +11,7 @@ export enum THREADS {
   ADD = "/threads/",
   LIKE = "/threadLikes/",
   GET_LIKE = "/threadLikes/",
+  GET_LIKES = "/threadLikes/",
   REPLIERS = "/threads/repliers/",
 }
 
