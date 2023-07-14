@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Col, Row, Tab, Tabs } from "react-bootstrap";
 import ProfileThreads from "./ProfileThreads";
+import ProfileReplies from "./ProfileReplies";
 
 const Sections = ({ username }: { username: string }) => {
   const [key, setKey] = useState("threads");
@@ -18,9 +19,9 @@ const Sections = ({ username }: { username: string }) => {
           <Tab eventKey="threads" title="Threads">
             {key && <ProfileThreads username={username} />}
           </Tab>
-          {/* <Tab eventKey="replies" title="Replies">
-                      replies
-                    </Tab> */}
+          <Tab eventKey="replies" title="Replies">
+            {key && <ProfileReplies username={username} />}
+          </Tab>
         </Tabs>
       </Col>
     </Row>

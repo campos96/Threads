@@ -112,13 +112,13 @@ const Header = ({ profile }: { profile: Profile }) => {
               </Col>
             </Row>
           )}
-          <Row className="mt-3">
+          {/* <Row className="mt-3">
             <Col>
               <a href="/eeeeee" className="link-dark">
                 x followers
               </a>
             </Col>
-          </Row>
+          </Row> */}
         </Card.Body>
       </Card>
 

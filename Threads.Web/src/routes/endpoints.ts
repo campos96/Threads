@@ -21,9 +21,11 @@ export enum ATTACHMENTS {
   GET = "/threadAttachments/",
 }
 
+
 export enum PROFILE {
   GET = "/profiles/username/",
   THREADS = "/profiles/threads/",
+  REPLIES = "/profiles/replies/",
   ACCOUNT = "/profiles/account/",
   PUT_ACCOUNT = "/profiles/account/",
   SET_PHOTO = "/profiles/photo/",

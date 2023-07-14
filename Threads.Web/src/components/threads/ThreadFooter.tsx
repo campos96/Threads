@@ -91,7 +91,7 @@ const ThreadFooter = ({
           <Col className="d-flex ps-0">
             <div
               className="d-flex float-start gap-2 align-items-center text-secondary"
-              style={{ fontSize: 14, fontWeight: 500, zIndex:1 }}
+              style={{ fontSize: 14, fontWeight: 500 }}
             >
               {thread.replies > 0 && (
                 <small

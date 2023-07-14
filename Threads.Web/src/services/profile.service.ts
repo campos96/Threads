@@ -32,6 +32,13 @@ export const getThreads = (username: string) => {
   }).then((response) => response);
 };
 
+export const getReplies = (username: string) => {
+  return request(API_URL + PROFILE.REPLIES + username, {
+    method: "GET",
+    headers: headers(),
+  }).then((response) => response);
+};
+
 export const postProfilePhoto = (accountid: string, photo: File) => {
   const formData = new FormData();
   formData.append("photo", photo);
