@@ -60,6 +60,7 @@ const ThreadHeaderDetailed = ({
                 src={API_URL + PROFILE.GET_PHOTO + thread.account!.username}
                 roundedCircle
                 width={50}
+                height={50}
               />
               {(thread.replies > 0 || replyMode) && (
                 <div className="thread-line"></div>
@@ -164,14 +165,14 @@ const ThreadHeaderDetailed = ({
                     >
                       <Row>
                         <Col xs="auto">
-                          <div style={{ width: 50 }}>
+                          <div style={{ width: 50, height: 50 }}>
                             <Image
                               src={
                                 API_URL +
                                 PROFILE.GET_PHOTO +
                                 threadLike.username
                               }
-                              className="rounded-circle w-100"
+                              className="rounded-circle w-100 h-100"
                             />
                           </div>
                         </Col>

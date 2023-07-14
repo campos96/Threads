@@ -104,6 +104,7 @@ const ReplyThread = () => {
                     src={API_URL + PROFILE.GET_PHOTO + userIdentity()!.username}
                     roundedCircle
                     width={50}
+                    height={50}
                   />
                   <div className="thread-line"></div>
                 </Col>
@@ -177,7 +178,7 @@ const ReplyThread = () => {
                         API_URL + PROFILE.GET_PHOTO + userIdentity()!.username
                       }
                       roundedCircle
-                      style={{ marginLeft: 15, width: 20 }}
+                      style={{ marginLeft: 15, width: 20, height: 20 }}
                     />
                   </div>
                 </Col>

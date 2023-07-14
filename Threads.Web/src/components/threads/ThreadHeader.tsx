@@ -46,6 +46,7 @@ const ThreadHeader = ({
               src={API_URL + PROFILE.GET_PHOTO + thread.account!.username}
               roundedCircle
               width={50}
+              height={50}
             />
             {(thread.replies > 0 || replyMode) && (
               <div className="thread-line"></div>

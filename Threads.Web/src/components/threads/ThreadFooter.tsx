@@ -133,12 +133,12 @@ const ThreadFooter = ({
                 >
                   <Row>
                     <Col xs="auto">
-                      <div style={{ width: 50 }}>
+                      <div style={{ width: 50, height: 50 }}>
                         <Image
                           src={
                             API_URL + PROFILE.GET_PHOTO + threadLike.username
                           }
-                          className="rounded-circle w-100"
+                          className="rounded-circle w-100 h-100"
                         />
                       </div>
                     </Col>
@@ -171,7 +171,7 @@ const ThreadFooterRepliers = ({ threadId }: { threadId: string }) => {
   return (
     <div className="h-100">
       <div
-        style={{ width: 50 }}
+        style={{ width: 50, height: 50 }}
         className="h-100 d-flex justify-content-center align-items-center"
       >
         {repliers &&
@@ -182,6 +182,7 @@ const ThreadFooterRepliers = ({ threadId }: { threadId: string }) => {
               roundedCircle
               style={{
                 width: repliers.length === 1 ? 25 : 50 / repliers.length,
+                height: repliers.length === 1 ? 25 : 50 / repliers.length,
               }}
             />
           ))}
