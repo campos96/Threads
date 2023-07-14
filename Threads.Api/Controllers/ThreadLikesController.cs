@@ -15,9 +15,21 @@ namespace Threads.Api.Controllers
     {
         private readonly ThreadsContext _context;
 
-        public ThreadLikesController (ThreadsContext context)
+        public ThreadLikesController(ThreadsContext context)
         {
             _context = context;
+        }
+
+        [HttpGet("{threadId}")]
+        public async Task<ActionResult<List<Account>>> GetThreadLikes(Guid threadId)
+        {
+            var threadLikes = await _context.ThreadLikes
+                .Include(l => l.Account)
+                .Where(l => l.ThreadId == threadId)
+                .Select(l => l.Account)
+                .ToListAsync();
+
+            return ApiResult.Ok(payload: threadLikes);
         }
 
         [HttpGet("{threadId}/{accountId}")]
