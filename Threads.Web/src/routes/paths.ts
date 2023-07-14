@@ -10,6 +10,7 @@ const PATHS = {
   PROFILE_EDIT: APP_ROOT + "/profile/edit/",
   LOGOUT: APP_ROOT + "/logout/",
   NEW_THREAD: APP_ROOT + "/threads/new/",
+  THREAD: APP_ROOT + "/thread/",
   REPLY_THREAD: APP_ROOT + "/threads/reply/",
 };
 

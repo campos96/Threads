@@ -138,7 +138,7 @@ body {
 }
 
 .card .card-body {
-    padding: 0.75rem !important;
+    padding: 0.75rem;
 }
 
 .card .card-body .card-title {

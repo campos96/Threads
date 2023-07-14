@@ -16,6 +16,7 @@ import {
 import Account from "../../types/Account";
 import { API_URL, PROFILE } from "../../routes/endpoints";
 import PATHS from "../../routes/paths";
+import { useNavigate } from "react-router-dom";
 
 type ThreadFooterProps = {
   threadId: string;
@@ -28,6 +29,7 @@ const ThreadFooter = ({
   filledThread,
   replied,
 }: ThreadFooterProps) => {
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState<boolean>(false);
   const [thread, setThread] = useState<Thread>();
   const [threadLikeList, setThreadLikeList] = useState<Array<Account>>();
@@ -45,7 +47,7 @@ const ThreadFooter = ({
     }
   }, [threadId, filledThread]);
 
-  const handleShowModal = (show: boolean) => {
+  const handleShowLikesModal = (show: boolean) => {
     getThreadLikes(threadId).then((response) => {
       if (response.status === 200) {
         const threadLikes = response.payload as Array<Account>;
@@ -54,6 +56,10 @@ const ThreadFooter = ({
     });
     setShowModal(show);
   };
+
+  function handleShowReplies(): void {
+    navigate(PATHS.THREAD + threadId);
+  }
 
   return (
     <>
@@ -85,10 +91,13 @@ const ThreadFooter = ({
           <Col className="d-flex ps-0">
             <div
               className="d-flex float-start gap-2 align-items-center text-secondary"
-              style={{ fontSize: 14, fontWeight: 500 }}
+              style={{ fontSize: 14, fontWeight: 500, zIndex:1 }}
             >
               {thread.replies > 0 && (
-                <small className="link-dark">
+                <small
+                  className="link-dark"
+                  onClick={() => handleShowReplies()}
+                >
                   {thread.replies} {thread.replies > 1 ? "replies" : "Reply"}
                 </small>
               )}
@@ -96,7 +105,7 @@ const ThreadFooter = ({
               {thread.likes > 0 && (
                 <small
                   className="link-dark"
-                  onClick={() => handleShowModal(true)}
+                  onClick={() => handleShowLikesModal(true)}
                 >
                   {thread.likes} like{thread.likes > 1 && "s"}
                 </small>
@@ -105,7 +114,11 @@ const ThreadFooter = ({
           </Col>
         </Row>
       )}
-      <Modal centered show={showModal} onHide={() => handleShowModal(false)}>
+      <Modal
+        centered
+        show={showModal}
+        onHide={() => handleShowLikesModal(false)}
+      >
         <Modal.Header closeButton className="border-0"></Modal.Header>
         <Modal.Body className="p-0">
           <Modal.Title className="text-center">Likes</Modal.Title>
@@ -113,6 +126,7 @@ const ThreadFooter = ({
             {threadLikeList &&
               threadLikeList.map((threadLike, index) => (
                 <ListGroupItem
+                  variant="flush"
                   key={index}
                   action
                   href={PATHS.PROFILE + threadLike.username}
@@ -155,15 +169,20 @@ const ThreadFooterRepliers = ({ threadId }: { threadId: string }) => {
   }, [threadId]);
 
   return (
-    <div>
-      <div style={{ width: 50 }}>
+    <div className="h-100">
+      <div
+        style={{ width: 50 }}
+        className="h-100 d-flex justify-content-center align-items-center"
+      >
         {repliers &&
-          repliers.map((replier, index) => (
+          repliers.slice(0, 3).map((replier, index) => (
             <Image
               key={index}
               src={API_URL + PROFILE.GET_PHOTO + replier.username}
               roundedCircle
-              style={{ width: 50 / repliers.length }}
+              style={{
+                width: repliers.length === 1 ? 25 : 50 / repliers.length,
+              }}
             />
           ))}
       </div>

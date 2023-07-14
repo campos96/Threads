@@ -13,6 +13,7 @@ export enum THREADS {
   GET_LIKE = "/threadLikes/",
   GET_LIKES = "/threadLikes/",
   REPLIERS = "/threads/repliers/",
+  REPLIES = "/threads/replies/",
 }
 
 export enum ATTACHMENTS {
