@@ -20,6 +20,10 @@ namespace Threads.Core.Models
         [Required]
         public string FileName { get; set; }
 
+        public int? Width { get; set; }
+
+        public int? Height { get; set; }
+
         [ForeignKey(nameof(ThreadId))]
         public Thread? Thread { get; set; }
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 using Threads.Api.Data;
 using Threads.Core.Models;
 
@@ -37,6 +38,17 @@ namespace Threads.Api.Controllers
                 return ApiResult.NotFound();
             }
 
+            if (attachment.Width == null || attachment.Height == null)
+            {
+                using (var ms = new MemoryStream(attachment.Bytes))
+                {
+                    var image = Image.FromStream(ms);
+                    attachment.Width = image.Width;
+                    attachment.Height = image.Height;
+                    await _context.SaveChangesAsync();
+                }
+            }
+
             return File(attachment.Bytes, attachment.ContentType);
         }
 
@@ -60,13 +72,17 @@ namespace Threads.Api.Controllers
             {
                 await picture.CopyToAsync(ms);
 
+                var image = Image.FromStream(ms);
+
                 var threadAttachment = new ThreadAttachment
                 {
                     Id = Guid.NewGuid(),
                     ThreadId = thread.Id,
                     FileName = picture.FileName,
                     Bytes = ms.ToArray(),
-                    ContentType = picture.ContentType
+                    ContentType = picture.ContentType,
+                    Width = image.Width,
+                    Height = image.Height,
                 };
 
                 _context.ThreadAttachments.Add(threadAttachment);
