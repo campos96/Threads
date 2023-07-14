@@ -30,6 +30,7 @@ namespace Threads.Api.Controllers
             }
 
             var threads = await _context.Threads
+                .Where(t => t.RepliedThread == null)
                 .OrderByDescending(t => t.Created)
                 .ToListAsync();
 
@@ -83,6 +84,23 @@ namespace Threads.Api.Controllers
                 .Where(t => t.RepliedThreadId == threadId)
                 .OrderByDescending(t => t.Created)
                 .Select(t => t.Account)
+                .ToListAsync();
+
+            return ApiResult.Ok(payload: repliers);
+        }
+
+        // GET: api/Threads/Replies/5
+        [HttpGet("Replies/{threadId}")]
+        public async Task<ActionResult<Account>> GetThreadReplies(Guid threadId)
+        {
+            if (threadId == Guid.Empty)
+            {
+                return ApiResult.BadRequest();
+            }
+
+            var repliers = await _context.Threads
+                .Where(t => t.RepliedThreadId == threadId)
+                .OrderByDescending(t => t.Created)
                 .ToListAsync();
 
             return ApiResult.Ok(payload: repliers);
