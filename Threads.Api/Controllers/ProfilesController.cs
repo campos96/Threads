@@ -101,36 +101,6 @@ namespace Threads.Api.Controllers
             return ApiResult.Ok(payload: accountProfile);
         }
 
-
-        // GET: api/profiles/photo/{username}
-        [AllowAnonymous]
-        [HttpGet("photo/{username}")]
-        public async Task<ActionResult> GetPhoto(string username)
-        {
-            if (username == string.Empty)
-            {
-                return ApiResult.BadRequest();
-            }
-
-            var profilePhoto = await _context.ProfilePhotos
-                .Include(p => p.Account)
-                .Where(p => p.Account.Username == username)
-                .FirstOrDefaultAsync();
-
-            if (profilePhoto == null)
-            {
-                var defaultPhoto = await _context.Configuration.FirstOrDefaultAsync();
-                if (defaultPhoto == null || defaultPhoto.DefaultProfilePhoto == null)
-                {
-                    return ApiResult.NotFound();
-                }
-
-                return File(defaultPhoto.DefaultProfilePhoto, "image/jpge");
-            }
-
-            return File(profilePhoto.Bytes, profilePhoto.ContentType);
-        }
-
         // PUT: api/profiles/account/{id}
         [HttpPut("account/{id}")]
         public async Task<ActionResult<AccountProfile>> PutAccountProfile(Guid id, AccountProfile accountProfile)
@@ -240,76 +210,6 @@ namespace Threads.Api.Controllers
                 .ToListAsync();
 
             return ApiResult.Ok(payload: threads);
-        }
-
-        // POST: api/profiles/photo/{accountId}
-        [HttpPost("photo/{accountId}")]
-
-        public async Task<ActionResult> SetPhoto(Guid accountId, IFormFile photo)
-        {
-            if (accountId == Guid.Empty || photo == null)
-            {
-                return ApiResult.BadRequest();
-            }
-
-            var profile = await _context.Profiles.FindAsync(accountId);
-            if (profile == null)
-            {
-                return ApiResult.BadRequest();
-            }
-            using (var trx = _context.Database.BeginTransactionAsync())
-            {
-                try
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        var profilePhotos = await _context.ProfilePhotos
-                            .Where(p => p.AccountId == accountId)
-                            .ToListAsync();
-                        _context.ProfilePhotos.RemoveRange(profilePhotos);
-                        await _context.SaveChangesAsync();
-
-                        await photo.CopyToAsync(ms);
-
-                        var profilePhoto = new ProfilePhoto
-                        {
-                            AccountId = accountId,
-                            FileName = photo.FileName,
-                            ContentType = photo.ContentType,
-                            Bytes = ms.ToArray(),
-                            Date = DateTime.Now
-                        };
-
-                        _context.ProfilePhotos.Add(profilePhoto);
-                        await _context.SaveChangesAsync();
-                        await trx.Result.CommitAsync();
-                        return ApiResult.Ok();
-                    }
-                }
-                catch
-                {
-                    await trx.Result.RollbackAsync();
-                    throw;
-                }
-            }
-        }
-
-        // DELETE: api/profiles/photo/{accountId}
-        [HttpDelete("photo/{accountId}")]
-        public async Task<ActionResult> DeletePhotos(Guid accountId)
-        {
-            if (accountId == Guid.Empty)
-            {
-                return ApiResult.BadRequest();
-            }
-
-            var profilePhoto = await _context.ProfilePhotos
-                .Where(p => p.AccountId == accountId)
-                .ToListAsync();
-
-            _context.ProfilePhotos.RemoveRange(profilePhoto);
-            await _context.SaveChangesAsync();
-            return ApiResult.Ok();
         }
 
         private bool ProfileExists(Guid id)
