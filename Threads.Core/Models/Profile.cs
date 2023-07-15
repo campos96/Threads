@@ -16,8 +16,6 @@ namespace Threads.Core.Models
 
         public bool IsPrivate { get; set; }
 
-        public byte[]? Picture { get; set; }
-
         [ForeignKey(nameof(AccountId))]
         public Account? Account { get; set; }
     }
