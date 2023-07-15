@@ -79,7 +79,7 @@ namespace Threads.Api.Controllers
                     new Claim(JwtRegisteredClaimNames.Email, security.Account.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                  }),
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddDays(1),
                 Issuer = issuer,
                 Audience = audience,
                 SigningCredentials = new SigningCredentials(
