@@ -89,7 +89,7 @@ const NewThread = () => {
               <Row>
                 <Col xs="auto" className="overflow-hidden">
                   <Image
-                    src={API_URL + PROFILE.GET_PHOTO + userIdentity()!.username}
+                    src={API_URL + PROFILE.GET_THUMBNAIL + userIdentity()!.username}
                     roundedCircle
                     width={50}
                     height={50}
@@ -163,7 +163,7 @@ const NewThread = () => {
                   <div style={{ width: 50 }}>
                     <Image
                       src={
-                        API_URL + PROFILE.GET_PHOTO + userIdentity()!.username
+                        API_URL + PROFILE.GET_THUMBNAIL + userIdentity()!.username
                       }
                       roundedCircle
                       style={{ marginLeft: 15, width: 20, height: 20 }}

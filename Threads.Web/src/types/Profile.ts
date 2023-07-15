@@ -6,7 +6,6 @@ type Profile = {
   biography?: string;
   link?: string;
   isPrivate: boolean;
-  picture?: string;
   account?: Account;
 };
 

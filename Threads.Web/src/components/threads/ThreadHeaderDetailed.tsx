@@ -57,7 +57,7 @@ const ThreadHeaderDetailed = ({
           <Row>
             <Col xs="auto" className="overflow-hidden">
               <Image
-                src={API_URL + PROFILE.GET_PHOTO + thread.account!.username}
+                src={API_URL + PROFILE.GET_THUMBNAIL + thread.account!.username}
                 roundedCircle
                 width={50}
                 height={50}

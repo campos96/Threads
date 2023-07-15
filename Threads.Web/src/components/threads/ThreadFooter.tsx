@@ -136,7 +136,7 @@ const ThreadFooter = ({
                       <div style={{ width: 50, height: 50 }}>
                         <Image
                           src={
-                            API_URL + PROFILE.GET_PHOTO + threadLike.username
+                            API_URL + PROFILE.GET_THUMBNAIL + threadLike.username
                           }
                           className="rounded-circle w-100 h-100"
                         />
@@ -178,8 +178,9 @@ const ThreadFooterRepliers = ({ threadId }: { threadId: string }) => {
           repliers.slice(0, 3).map((replier, index) => (
             <Image
               key={index}
-              src={API_URL + PROFILE.GET_PHOTO + replier.username}
+              src={API_URL + PROFILE.GET_THUMBNAIL + replier.username}
               roundedCircle
+              loading="lazy"
               style={{
                 width: repliers.length === 1 ? 25 : 50 / repliers.length,
                 height: repliers.length === 1 ? 25 : 50 / repliers.length,

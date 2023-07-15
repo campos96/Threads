@@ -28,7 +28,8 @@ export enum PROFILE {
   REPLIES = "/profiles/replies/",
   ACCOUNT = "/profiles/account/",
   PUT_ACCOUNT = "/profiles/account/",
-  SET_PHOTO = "/profiles/photo/",
-  GET_PHOTO = "/profiles/photo/",
-  DELETE_PHOTO = "/profiles/photo/",
+  SET_PHOTO = "/profilePictures/",
+  GET_PHOTO = "/profilePictures/",
+  GET_THUMBNAIL = "/profilePictures/thumbnail/",
+  DELETE_PHOTO = "/profilePictures/",
 }
