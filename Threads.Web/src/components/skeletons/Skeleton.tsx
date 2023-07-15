@@ -104,7 +104,8 @@ export const ThreadSkeletonActions = () => {
 
 export const Skeleton = ({ height, width, circle, style }: SkeletonProps) => {
   return (
-    <div className="skeleton"
+    <div
+      className="skeleton"
       style={{
         backgroundColor: "#ddd",
         height: height ?? 15,
