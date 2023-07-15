@@ -18,6 +18,7 @@ import { API_URL, PROFILE } from "../../routes/endpoints";
 import PATHS from "../../routes/paths";
 import { useNavigate } from "react-router-dom";
 import Thumbnail from "../images/Thumbnail";
+import { Skeleton } from "../skeletons/Skeleton";
 
 type ThreadFooterProps = {
   threadId: string;
@@ -153,15 +154,19 @@ const ThreadFooter = ({
 };
 
 const ThreadFooterRepliers = ({ threadId }: { threadId: string }) => {
+  const [loading, setLoading] = useState<boolean>(true);
   const [repliers, setRepliers] = useState<Array<Account>>([]);
 
   useEffect(() => {
-    getThreadRepliers(threadId).then((response) => {
-      if (response.status === 200) {
-        const _repliers = response.payload as Array<Account>;
-        setRepliers(_repliers);
-      }
-    });
+    setLoading(true);
+    getThreadRepliers(threadId)
+      .then((response) => {
+        if (response.status === 200) {
+          const _repliers = response.payload as Array<Account>;
+          setRepliers(_repliers);
+        }
+      })
+      .then(() => setLoading(false));
   }, [threadId]);
 
   return (
@@ -170,7 +175,8 @@ const ThreadFooterRepliers = ({ threadId }: { threadId: string }) => {
         style={{ width: 50, height: 50 }}
         className="h-100 d-flex justify-content-center align-items-center"
       >
-        {repliers &&
+        {loading && <Skeleton circle width={25} height={25} />}
+        {!loading &&
           repliers
             .slice(0, 3)
             .map((replier, index) => (

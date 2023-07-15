@@ -10,18 +10,14 @@ type ThumbnailProps = {
   style?: React.CSSProperties;
 };
 
-const Thumbnail = ({
-  username,
-  width,
-  height,
-  style: styles,
-}: ThumbnailProps) => {
+const Thumbnail = ({ username, width, height, style }: ThumbnailProps) => {
   return (
     <Image
+      className="thumbnail"
       src={API_URL + PROFILE.GET_THUMBNAIL + username}
       roundedCircle
       loading="lazy"
-      style={{ backgroundColor: "#ddd", ...styles }}
+      style={style}
       width={width ?? 50}
       height={height ?? 50}
     />

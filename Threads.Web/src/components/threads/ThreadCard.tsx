@@ -4,6 +4,7 @@ import { getThread } from "../../services/threads.service";
 import { Thread } from "../../types/Thread";
 import ThreadHeader from "./ThreadHeader";
 import ThreadFooter from "./ThreadFooter";
+import { ThreadSkeleton, ThreadSkeletonHeader } from "../skeletons/Skeleton";
 
 const ThreadCard = ({ threadId }: { threadId: string }) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -38,46 +39,48 @@ const ThreadCard = ({ threadId }: { threadId: string }) => {
 
   return (
     <>
-      {thread && (
-        <Card className="shadow-sm mb-1 mb-sm-2 mb-md-3 overflow-hidden">
-          <Card.Body>
-            {thread.repliedThreadId && (
-              <>
-                <ThreadHeader
-                  threadId={thread.repliedThreadId}
-                  handleUpdate={handleUpdate}
-                />
-                <ThreadFooter
-                  threadId={thread.repliedThreadId}
-                  replied={true}
-                />
-              </>
-            )}
-            <ThreadHeader
-              threadId={threadId}
-              filledThread={thread}
-              handleUpdate={handleUpdate}
-            />
-            <ThreadFooter threadId={threadId} filledThread={thread} />
-            {loading && (
-              <div
-                className="position-absolute top-0 start-0 w-100 h-100 d-flex 
+      <Card className="shadow-sm mb-1 mb-sm-2 mb-md-3">
+        <Card.Body>
+          {!thread && <ThreadSkeleton />}
+          {thread && (
+            <>
+              {thread.repliedThreadId && (
+                <>
+                  <ThreadHeader
+                    threadId={thread.repliedThreadId}
+                    handleUpdate={handleUpdate}
+                  />
+                  <ThreadFooter
+                    threadId={thread.repliedThreadId}
+                    replied={true}
+                  />
+                </>
+              )}
+              <ThreadHeader
+                threadId={threadId}
+                filledThread={thread}
+                handleUpdate={handleUpdate}
+              />
+              <ThreadFooter threadId={threadId} filledThread={thread} />
+            </>
+          )}
+          {/* {loading && (
+            <div
+              className="position-absolute top-0 start-0 w-100 h-100 d-flex 
               align-items-center justify-content-center bg-light bg-opacity-50 p-md-3"
-              >
-                <Spinner animation="border" className="mt-3" />
-              </div>
-            )}
-          </Card.Body>
-        </Card>
-      )}
-
-      {error && (
-        <div className="p-md-5 text-center text-muted">
-          <h1>Opps!</h1>
-          <h3>Something went wrong</h3>
-          <p>Please try again later...</p>
-        </div>
-      )}
+            >
+              <Spinner animation="border" className="mt-3" />
+            </div>
+          )} */}
+          {/* {error && (
+            <div className="p-md-5 text-center text-muted">
+              <h1>Opps!</h1>
+              <h3>Something went wrong</h3>
+              <p>Please try again later...</p>
+            </div>
+          )} */}
+        </Card.Body>
+      </Card>
     </>
   );
 };

@@ -131,6 +131,34 @@ body {
 
 /* Smartphone Menu */
 
+
+/* skeleton */
+
+@keyframes morph {
+    0% {
+        background-color: rgba(230, 230, 230, 0.2);
+    }
+
+    50% {
+        background-color: rgba(0, 100, 100, 0.15);
+    }
+
+    100% {
+        background-color: rgba(100, 100, 100, 0.2);
+    }
+}
+
+.skeleton {
+    animation: morph 1s infinite alternate;
+}
+
+/* skeleton */
+
+.thumbnail {
+    animation: morph 1s infinite alternate;
+}
+
+
 .card {
     border-radius: 1rem !important;
     /* box-shadow: 0 0 1rem 0 #d8dbe9 !important; */
@@ -211,7 +239,7 @@ form .btn .spinner-border {
     position: absolute;
     background-color: #008080;
     border-radius: 100%;
-    width:8px;
+    width: 8px;
     height: 8px;
     top: 50%;
     left: 50%;
