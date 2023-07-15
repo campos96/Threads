@@ -92,7 +92,11 @@ const ThreadHeader = ({
                   <Image
                     src={API_URL + ATTACHMENTS.GET + attachment.id}
                     rounded
-                    className="img-thumbnail w-100"
+                    loading="lazy"
+                    height={attachment.height}
+                    width={attachment.width}
+                    className="img-fluid"
+                    style={{ backgroundColor: "#ddd" }}
                   />
                 </div>
               ))}
