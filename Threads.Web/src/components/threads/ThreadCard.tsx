@@ -1,4 +1,4 @@
-import { Card, Spinner } from "react-bootstrap";
+import { Card, Col, Row, Spinner } from "react-bootstrap";
 import { useCallback, useEffect, useState } from "react";
 import { getThread } from "../../services/threads.service";
 import { Thread } from "../../types/Thread";

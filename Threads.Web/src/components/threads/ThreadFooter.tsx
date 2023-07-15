@@ -17,6 +17,7 @@ import Account from "../../types/Account";
 import { API_URL, PROFILE } from "../../routes/endpoints";
 import PATHS from "../../routes/paths";
 import { useNavigate } from "react-router-dom";
+import Thumbnail from "../images/Thumbnail";
 
 type ThreadFooterProps = {
   threadId: string;
@@ -134,12 +135,7 @@ const ThreadFooter = ({
                   <Row>
                     <Col xs="auto">
                       <div style={{ width: 50, height: 50 }}>
-                        <Image
-                          src={
-                            API_URL + PROFILE.GET_THUMBNAIL + threadLike.username
-                          }
-                          className="rounded-circle w-100 h-100"
-                        />
+                        <Thumbnail username={threadLike.username} />
                       </div>
                     </Col>
                     <Col>
@@ -175,18 +171,16 @@ const ThreadFooterRepliers = ({ threadId }: { threadId: string }) => {
         className="h-100 d-flex justify-content-center align-items-center"
       >
         {repliers &&
-          repliers.slice(0, 3).map((replier, index) => (
-            <Image
-              key={index}
-              src={API_URL + PROFILE.GET_THUMBNAIL + replier.username}
-              roundedCircle
-              loading="lazy"
-              style={{
-                width: repliers.length === 1 ? 25 : 50 / repliers.length,
-                height: repliers.length === 1 ? 25 : 50 / repliers.length,
-              }}
-            />
-          ))}
+          repliers
+            .slice(0, 3)
+            .map((replier, index) => (
+              <Thumbnail
+                key={index}
+                username={replier.username}
+                width={repliers.length === 1 ? 25 : 50 / repliers.length}
+                height={repliers.length === 1 ? 25 : 50 / repliers.length}
+              />
+            ))}
       </div>
 
       {/* {repliers.length === 1 && (

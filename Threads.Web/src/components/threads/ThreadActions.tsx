@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { userIdentity } from "../../services/identity.service";
 import { getThreadLike, postThreadLike } from "../../services/threads.service";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import PATHS from "../../routes/paths";

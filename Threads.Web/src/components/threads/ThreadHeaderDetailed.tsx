@@ -9,6 +9,7 @@ import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import timeElapsed from "../../utils/threadTimeElapsed";
 import ThreadActions from "./ThreadActions";
 import Account from "../../types/Account";
+import Thumbnail from "../images/Thumbnail";
 
 type ThreadHeaderDetailedProps = {
   threadId: string;
@@ -56,12 +57,7 @@ const ThreadHeaderDetailed = ({
         <>
           <Row>
             <Col xs="auto" className="overflow-hidden">
-              <Image
-                src={API_URL + PROFILE.GET_THUMBNAIL + thread.account!.username}
-                roundedCircle
-                width={50}
-                height={50}
-              />
+              <Thumbnail username={thread.account!.username} />
               {(thread.replies > 0 || replyMode) && (
                 <div className="thread-line"></div>
               )}

@@ -12,6 +12,7 @@ import { postThread, postThreadPicture } from "../../services/threads.service";
 import { ApiResponseError } from "../../types/ApiResponse";
 import ValidationErrors from "../../components/alerts/ValidationErrors";
 import { useNavigate } from "react-router-dom";
+import Thumbnail from "../../components/images/Thumbnail";
 
 const NewThread = () => {
   const navigate = useNavigate();
@@ -88,12 +89,7 @@ const NewThread = () => {
             <Form noValidate onSubmit={handleSubmit}>
               <Row>
                 <Col xs="auto" className="overflow-hidden">
-                  <Image
-                    src={API_URL + PROFILE.GET_THUMBNAIL + userIdentity()!.username}
-                    roundedCircle
-                    width={50}
-                    height={50}
-                  />
+                  <Thumbnail username={userIdentity()!.username} />
                   <div className="thread-line"></div>
                 </Col>
                 <Col className="ps-0">
@@ -161,11 +157,8 @@ const NewThread = () => {
               <Row>
                 <Col sm="auto">
                   <div style={{ width: 50 }}>
-                    <Image
-                      src={
-                        API_URL + PROFILE.GET_THUMBNAIL + userIdentity()!.username
-                      }
-                      roundedCircle
+                    <Thumbnail
+                      username={userIdentity()!.username}
                       style={{ marginLeft: 15, width: 20, height: 20 }}
                     />
                   </div>

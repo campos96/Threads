@@ -2,12 +2,13 @@ import { useState } from "react";
 import { Thread } from "../../types/Thread";
 import { getThread } from "../../services/threads.service";
 import { Col, Row, Image, Button } from "react-bootstrap";
-import { API_URL, ATTACHMENTS, PROFILE } from "../../routes/endpoints";
+import { API_URL, ATTACHMENTS } from "../../routes/endpoints";
 import PATHS from "../../routes/paths";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import timeElapsed from "../../utils/threadTimeElapsed";
 import ThreadActions from "./ThreadActions";
+import Thumbnail from "../images/Thumbnail";
 
 type ThreadHeaderProps = {
   threadId: string;
@@ -42,12 +43,7 @@ const ThreadHeader = ({
       {thread && (
         <Row>
           <Col xs="auto" className="overflow-hidden">
-            <Image
-              src={API_URL + PROFILE.GET_PHOTO + thread.account!.username}
-              roundedCircle
-              width={50}
-              height={50}
-            />
+            <Thumbnail username={thread.account!.username} />
             {(thread.replies > 0 || replyMode) && (
               <div className="thread-line"></div>
             )}

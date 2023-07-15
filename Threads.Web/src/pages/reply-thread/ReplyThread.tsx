@@ -14,6 +14,7 @@ import ValidationErrors from "../../components/alerts/ValidationErrors";
 import { useNavigate, useParams } from "react-router-dom";
 import ThreadHeader from "../../components/threads/ThreadHeader";
 import ThreadFooter from "../../components/threads/ThreadFooter";
+import Thumbnail from "../../components/images/Thumbnail";
 
 const ReplyThread = () => {
   const navigate = useNavigate();
@@ -84,11 +85,11 @@ const ReplyThread = () => {
         <Card.Title className="text-center">Reply</Card.Title>
 
         {threadId && (
-            <ThreadHeader
-              threadId={threadId}
-              replyMode={true}
-              handleUpdate={() => {}}
-            />
+          <ThreadHeader
+            threadId={threadId}
+            replyMode={true}
+            handleUpdate={() => {}}
+          />
         )}
 
         <Formik
@@ -100,12 +101,7 @@ const ReplyThread = () => {
             <Form noValidate onSubmit={handleSubmit}>
               <Row>
                 <Col xs="auto" className="overflow-hidden">
-                  <Image
-                    src={API_URL + PROFILE.GET_THUMBNAIL + userIdentity()!.username}
-                    roundedCircle
-                    width={50}
-                    height={50}
-                  />
+                  <Thumbnail username={userIdentity()!.username} />
                   <div className="thread-line"></div>
                 </Col>
                 <Col className="ps-0">
@@ -129,7 +125,7 @@ const ReplyThread = () => {
 
                   <input
                     id="profileFile"
-                    type="file" 
+                    type="file"
                     accept="image/png, image/gif, image/jpeg"
                     className="d-none"
                     ref={hiddenFileInput}
@@ -173,11 +169,8 @@ const ReplyThread = () => {
               <Row>
                 <Col sm="auto">
                   <div style={{ width: 50 }}>
-                    <Image
-                      src={
-                        API_URL + PROFILE.GET_THUMBNAIL + userIdentity()!.username
-                      }
-                      roundedCircle
+                    <Thumbnail
+                      username={userIdentity()!.username}
                       style={{ marginLeft: 15, width: 20, height: 20 }}
                     />
                   </div>
