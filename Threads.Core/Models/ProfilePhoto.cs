@@ -22,6 +22,8 @@ namespace Threads.Core.Models
         [Required]
         public byte[] Bytes { get; set; }
 
+        public byte[]? ThumbnailBytes { get; set; }
+
         [Required]
         public DateTime Date { get; set; }
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Threads.Api.Data;
 
@@ -11,9 +12,11 @@ using Threads.Api.Data;
 namespace Threads.Api.Migrations
 {
     [DbContext(typeof(ThreadsContext))]
-    partial class ThreadsContextModelSnapshot : ModelSnapshot
+    [Migration("20230714235346_AddProfilePictureThumbnail")]
+    partial class AddProfilePictureThumbnail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
