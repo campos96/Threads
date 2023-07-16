@@ -5,7 +5,7 @@ import { Button, Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import PATHS from "../../routes/paths";
-import { Skeleton, ThreadSkeletonActions } from "../skeletons/Skeleton";
+import { Skeleton } from "../skeletons/Skeleton";
 
 type ThreadActionsProps = {
   threadId: string;
@@ -30,6 +30,7 @@ const ThreadActions = ({ threadId, handleUpdate }: ThreadActionsProps) => {
     postThreadLike(threadId, userIdentity()!.id).then((response) => {
       if (response.status === 200) {
         console.log("thread liked");
+        setLikedThread(!likedThread);
         handleUpdate();
       }
     });
